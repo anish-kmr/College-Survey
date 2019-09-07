@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- header -->
         <app-header></app-header>
         <div class="box flip-box">
             <div class="login-form" v-if="login">
