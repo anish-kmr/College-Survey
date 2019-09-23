@@ -3,7 +3,7 @@
         <div >
 		    <div>
                 <router-link to="/" class="logo-link">
-                    <img src="../assets/logo.png" alt="" class="logo">
+                    <img src="../assets/logo.png" alt="" class="logo-img">
                     <span>COLLEGE SURVEYS</span>
                 </router-link>
             </div>
@@ -36,7 +36,7 @@
     display: inline-block;
     transform: translateY(-15px);
 }
-.logo{
+.logo-img{
     height:45px;
     width:45px;
 }

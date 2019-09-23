@@ -1,0 +1,136 @@
+.box{
+    margin-top: 10vh;
+}
+.logo{
+    margin: 0 auto;
+    display: flex;
+    width: max-content;
+    margin-bottom: 60px;;
+    position: relative;
+}
+
+.logo img{
+    width:65px;
+    height:65px;
+    
+}
+.logo span{
+    align-self:center;
+    margin-right: 10px;;
+    font-size: 20px;
+    font-weight: 600;
+}
+.logo h2{
+    font-size: 26px;
+    display: inline-block;
+    align-self: center;
+    color:#4b4a4a;
+}
+.logo .designation{
+    font-size: 2rem;
+    font-weight: normal;
+    font-style: italic;
+    position: absolute;
+    bottom:-10px;
+    right:-50px;
+}
+.login-form,.signin-form{
+    margin:2rem 4rem;
+    padding:2rem 4rem;
+}
+.form-box{
+    padding:2rem 4rem;
+    margin: 0 auto;
+    width:50%;
+    box-shadow: 0 0 10px #707070;
+}
+.form-heading{
+    font-size: 3rem;
+    font-weight: normal;
+    text-align: center;
+    color:#4e4c4c;
+    margin-top: 2rem;;
+    margin-bottom:5rem;
+}
+.form-group{
+    width: 95%;
+    margin:0 auto;
+    margin-bottom: 2rem;
+}
+.form-group label,.type{
+    display: block;
+    font-size: 2rem;
+    color: #4e4c4c;
+    margin:1rem 0;
+}
+.form-group input{
+    width: 100%;
+    padding:1rem 1.4rem;
+    border-radius: 8px;
+    border:1px solid #a3a2a2d2;
+    margin-bottom: .8rem;
+}
+.match{
+    border:2px solid rgba(238, 49, 49, 0.548)!important;
+}
+.form-group input:focus{
+    outline: none;
+    border:2px solid rgba(49, 147, 238, 0.548)
+}
+.multi-group{
+    display: grid;
+    grid-template-columns: 50% auto;
+}
+.form-group-half:first-child{
+    padding-right: 10px;
+
+}
+.form-group-half:last-child{
+    padding-left: 10px;
+
+}
+.type label{
+    display: inline-block;
+    margin-left: 1.5rem;
+
+}
+.type input{
+    width: max-content;
+    display: inline;
+}
+.submit-btn{
+    text-align: center;
+    margin:2rem 0;
+}
+.btn{
+    width: 100%;
+    padding:1.5rem 4rem;
+    font-size:2.4rem;
+    letter-spacing: .3rem;
+    text-transform: uppercase;
+    background-color: #0c90b8;
+    border:2px solid #0c90b8;
+    color: #e2e1e1;
+    transition: .3s all;
+}
+.btn:hover{
+    background-color: #0d72a1;
+
+    border:2px solid #0d72a1;
+    color:#ffffff;
+    cursor: pointer;
+}
+.signin,.login{
+    padding:1rem 0;
+    font-size: 2rem;
+    text-align: center;
+    color: rgba(86, 52, 211, 0.925);
+}
+.signin:hover,.login:hover{cursor: pointer;}
+.sm-text{
+    font-size: 1.2rem
+}
+.matchmsg{
+    color:red;
+    padding-left: 1rem;
+}

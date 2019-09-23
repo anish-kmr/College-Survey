@@ -52,6 +52,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="box faculty-section">
+                <div class="box-heading">
+                    <h4>
+                       Faculty qoute
+                    </h4>
+                    <h2>
+                        FACULTY
+                    </h2>
+                </div>
+                <div class="box-content">
+                    <ul class="box-list circle-type">
+                        <li>Give Feedback to surveys</li>
+                        <li>Recieve credit points after reviewing</li>
+                         <li>Send Personal Suggestions anonymously to Admin</li>
+                    </ul> 
+                    <div class="login-btn">
+                        <router-link to="/faculty/login" class="btn">
+                            Login
+                        </router-link>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="banner-section">
@@ -126,10 +149,8 @@ export default {
     'app-footer':Footer,
   },
   mounted() {
-    //   alert('kej')
       var a = document.getElementById("header")
       a.classList.add("trans-color")
-      console.log(a)
 
       window.addEventListener('scroll', (event) => {
         this.scrollY = Math.round(window.scrollY);
@@ -139,7 +160,6 @@ export default {
         else{
             a.classList.add("trans-color")
         }
-      console.log(this.scrollY)
     });
   },
 }
@@ -162,9 +182,7 @@ export default {
     background-position: 70%;
     filter:brightness(70%);
     background-size: cover;
-    /* transform: translateY(-2vh); */
     z-index: -1;;
-    /* outline: 2px solid red; */
 }
 .banner h4{
     text-align: center;
@@ -222,6 +240,10 @@ export default {
     color:#4e4c4c;
     margin:2rem 0;
 
+}
+.faculty-section{
+    margin: 4rem auto;
+    grid-column: 1/3;
 }
 .box-list li{
     padding:.3rem;

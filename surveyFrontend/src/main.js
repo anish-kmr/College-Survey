@@ -3,6 +3,7 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 
 import LandingPage from './views/LandingPage.vue'
+import FacultyLogin from './views/FacultyLogin.vue'
 import StudentLogin from './views/StudentLogin.vue'
 import AdminLogin from './views/AdminLogin.vue'
 
@@ -20,6 +21,10 @@ const router = new VueRouter({
     {
       path:'/student/login',
       component:StudentLogin,
+    },
+    {
+      path:'/faculty/login',
+      component:FacultyLogin,
     },
   ],
   mode:'history'

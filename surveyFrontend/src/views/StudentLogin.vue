@@ -2,7 +2,7 @@
     <div>
         <app-header></app-header>
         <div class="box flip-box">
-            <div class="login-form" v-if="login">
+            <div class="login-form" v-if="login_shown">
                 <div class="form-box">
                     <!-- <h4 class="form-heading">Login To College Survey </h4> -->
                      <div class="logo">
@@ -11,22 +11,22 @@
                         <h2>College Survey</h2>
                         <h2 class="designation">Student</h2>
                     </div>
-                    <form action="" method="POST" >
+                    <form>
                         <div class="form-group">
-                            <label for="username">Enrollment No. : </label>
-                            <input type="text" name="username" id="username">
+                            <label for="email">Email : </label>
+                            <input type="email" name="email" id="email" v-model="login.email">
                         </div>
 
                         <div class="form-group">
                             <label for="password">Password :  </label>
-                            <input type="password" name="password" id="password">
+                            <input type="password" name="password" id="password" v-model="login.password">
                             <router-link to="/student/forgotpassword" class="sm-text">
                                 Forgot Password?
                             </router-link>
                         </div>
                         <div class="form-group">
                             <div class="submit-btn">
-                                <button class="btn">Login</button>
+                                <button class="btn" @click="authenticate">Login</button>
                             </div>
 
                         </div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="signin-form" v-if="signin">
+            <div class="signin-form" v-if="signin_shown">
                 <div class="form-box">
                     <!-- <h4 class="form-heading">Login To College Survey </h4> -->
                      <div class="logo">
@@ -46,36 +46,46 @@
                         <h2>College Survey</h2>
                         <h2 class="designation">ADMIN</h2>
                     </div>
-                    <form action="" method="POST" >
+                    <form>
                         <div class="form-group">
                             <label for="username">Enrollment No. : </label>
-                            <input type="text" name="username" id="username">
+                            <input type="text" name="username" id="username" v-model="signin.eno">
                         </div>
 
                         <div class="form-group multi-group">
                             <div class="form-group-half">
                                 <label for="firstname">First Name :</label>
-                                <input type="text" id="firstname">
+                                <input type="text" id="firstname" v-model="signin.first_name">
                             </div>
                             <div class="form-group-half">
                                 <label for="lastname">Last Name :</label>
-                                <input type="text" id="lastname">
+                                <input type="text" id="lastname" v-model="signin.last_name">
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <label for="email">Email: </label>
+                            <input type="email" name="email" id="email" v-model="signin.email">
+                        </div>
+
+                        <div class="form-group">
                             <label for="batch">Batch: </label>
-                            <input type="text" name="batch" id="batch">
+                            <input type="text" name="batch" id="batch"  v-model="signin.batch">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year">Year: </label>
+                            <input type="number" name="year" id="year"  v-model="signin.year">
                         </div>
 
                         <div class="form-group">    
                             <label for="password">Password :  </label>
-                            <input type="password" name="password" id="password" v-model="password" @keyup="validatePassword">
+                            <input type="password" name="password" id="password" v-model="signin.password" @keyup="validatePassword">
                         </div>
 
                         <div class="form-group">    
                             <label for="cnfpassword"> Confirm Password :  </label>
-                            <input type="password" name="cnfpassword" id="cnfpassword" v-model="cnfpassword" @keyup="validatePassword" :class="{match:!match}">
+                            <input type="password" name="cnfpassword" id="cnfpassword" v-model="signin.cnfpassword" @keyup="validatePassword" :class="{match:!match}">
                             <span v-if="!match" class="matchmsg">
                                 Passwords do not match.
                             </span>
@@ -83,13 +93,12 @@
 
                         <div class="form-group type">
                             <label for="type">I am a  </label>
-                            <input type="radio" name="type" id="type"> Hosteller
-                            <input type="radio" name="type" id="type"> Day Scholar
+                            <input type="radio" name="type" value="Hosteller" v-model="signin.type"> Hosteller
+                            <input type="radio" name="type" value="Day Scholar" v-model="signin.type"> Day Scholar
                         </div>
-
                         <div class="form-group">
                             <div class="submit-btn">
-                                <button class="btn">Create Account</button>
+                                <button class="btn" @click="createAccount">Create Account</button>
                             </div>
 
                         </div>
@@ -109,30 +118,70 @@
 
 import Header from '../components/Header.vue'
 import Footer from '../components/Footer.vue'
+
+import axios from 'axios';
 export default {
     data(){
         return{
-            login:true,
-            signin:false,
-            password:"",
-            cnfpassword:"",
+            login_shown:true,
+            signin_shown:false,
             match:true,
+            login:{
+                email:"",
+                password:"",
+            },
+            signin:{
+                eno:"",
+                first_name:"",
+                last_name:"",
+                batch:"",
+                year:"",
+                email:"",
+                type:"",
+                password:"",
+                cnfpassword:"",
+            }
         }
     },
     methods:{
         toggleForm(){
-            this.login=!this.login;
-            this.signin=!this.signin;
+            this.login_shown=!this.login_shown;
+            this.signin_shown=!this.signin_shown;
         },
         validatePassword(){
-            console.log(this.password)
-            console.log(this.cnfpassword)
-            console.log(this.temp)
-            if(this.password != this.cnfpassword){
+            if(this.signin.password != this.signin.cnfpassword){
                 this.match = false;
             }else{
                 this.match=true;
             }
+        },
+         authenticate(ev){
+            ev.preventDefault();
+            let payload = {
+                email:this.login.email,
+                password:this.login.password,
+            }
+            console.log(payload);
+            axios.post("http://www.localhost/surveyBackend/student/login",payload).then(res=>{
+                console.log("res aaya ",res);
+            })
+        },
+        createAccount(ev){
+            ev.preventDefault();
+            let payload = {
+                enrollment_no:this.signin.eno,
+                first_name:this.signin.first_name,
+                last_name:this.signin.last_name,
+                email:this.signin.email,
+                batch:this.signin.batch,
+                type:this.signin.type,
+                year:this.signin.year,
+                password:this.signin.password,
+            }
+            console.log(payload);
+            axios.put("http://www.localhost/surveyBackend/student/signin",payload).then(res=>{
+                console.log("res of put  ",res);
+            })
         }
     },
     components:{
@@ -145,139 +194,5 @@ export default {
 
 <style scoped>
 
-.box{
-    margin-top: 10vh;
-}
-.logo{
-    margin: 0 auto;
-    display: flex;
-    width: max-content;
-    margin-bottom: 60px;;
-    position: relative;
-}
-.logo img{
-    width:65px;
-    height:65px;
-    
-}
-.logo span{
-    align-self:center;
-    margin-right: 10px;;
-    font-size: 20px;
-    font-weight: 600;
-}
-.logo h2{
-    font-size: 26px;
-    display: inline-block;
-    align-self: center;
-    color:#4b4a4a;
-}
-.logo .designation{
-    font-size: 2rem;
-    font-weight: normal;
-    font-style: italic;
-    position: absolute;
-    bottom:-10px;
-    right:-50px;
-}
-.login-form,.signin-form{
-    margin:2rem 4rem;
-    padding:2rem 4rem;
-}
-.form-box{
-    padding:2rem 4rem;
-    margin: 0 auto;
-    width:50%;
-    box-shadow: 0 0 10px #707070;
-}
-.form-heading{
-    font-size: 3rem;
-    font-weight: normal;
-    text-align: center;
-    color:#4e4c4c;
-    margin-top: 2rem;;
-    margin-bottom:5rem;
-}
-.form-group{
-    width: 95%;
-    margin:0 auto;
-    margin-bottom: 2rem;
-}
-.form-group label,.type{
-    display: block;
-    font-size: 2rem;
-    color: #4e4c4c;
-    margin:1rem 0;
-}
-.form-group input{
-    width: 100%;
-    padding:1rem 1.4rem;
-    border-radius: 8px;
-    border:1px solid #a3a2a2d2;
-    margin-bottom: .8rem;
-}
-.match{
-    border:2px solid rgba(238, 49, 49, 0.548)!important;
-}
-.form-group input:focus{
-    outline: none;
-    border:2px solid rgba(49, 147, 238, 0.548)
-}
-.multi-group{
-    display: grid;
-    grid-template-columns: 50% auto;
-}
-.form-group-half:first-child{
-    padding-right: 10px;
-
-}
-.form-group-half:last-child{
-    padding-left: 10px;
-
-}
-.type label{
-    display: inline-block;
-    margin-left: 1.5rem;
-
-}
-.type input{
-    width: max-content;
-    display: inline;
-}
-.submit-btn{
-    text-align: center;
-    margin:2rem 0;
-}
-.btn{
-    width: 100%;
-    padding:1.5rem 4rem;
-    font-size:2.4rem;
-    letter-spacing: .3rem;
-    text-transform: uppercase;
-    background-color: #0c90b8;
-    border:2px solid #0c90b8;
-    color: #e2e1e1;
-    transition: .3s all;
-}
-.btn:hover{
-    background-color: #0d72a1;
-
-    border:2px solid #0d72a1;
-    color:#ffffff;
-    cursor: pointer;
-}
-.signin,.login{
-    padding:1rem 0;
-    font-size: 2rem;
-    text-align: center;
-    color: rgba(86, 52, 211, 0.925);
-}
-.signin:hover,.login:hover{cursor: pointer;}
-.sm-text{
-    font-size: 1.2rem
-}
-.matchmsg{
-    color:red;
-    padding-left: 1rem;
-}
+@import '../assets/css/login.css';
 </style>
