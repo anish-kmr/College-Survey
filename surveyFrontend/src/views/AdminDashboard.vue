@@ -1,7 +1,14 @@
 <template>
     <div>
         <app-header :role="'admin'"></app-header>
-        <sidebar></sidebar>
+        <div class="grid">
+            <sidebar></sidebar>
+            <div class="main-area">
+                <router-view></router-view>
+            </div>
+        </div>
+       
+        
     </div>
 </template>
 
@@ -16,14 +23,13 @@ export default {
     },
     data(){
         return{
-            name:"",
-            email:"",
+            user :"",
         }
     },
     beforeMount() {
         if(localStorage.getItem("role")=='admin'){
-            this.name = localStorage.getItem("name");
-            this.email = localStorage.getItem("email");
+            this.user = JSON.parse(localStorage.getItem('user'));
+
         }
         else{
             this.$router.push("/admin/login");
@@ -31,3 +37,14 @@ export default {
     },  
 }
 </script>
+
+
+<style scoped>
+.grid{
+    display: grid;
+    grid-template-columns: 20vw auto
+}
+.main-area{
+    height: 90h;
+}
+</style>

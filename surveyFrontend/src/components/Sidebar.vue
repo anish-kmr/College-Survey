@@ -1,8 +1,34 @@
 <template>
     <div class="sidebar">
-        <div class="create-survey" v-if="role=='admin'">
-            <span class="plus"><i class="fas fa-plus"></i> </span>
-            <h2>Survey</h2>
+        <div  v-if="role=='admin'">
+            <router-link to="/admin/survey/create">
+                <div class="create-survey">
+                    <span class="plus"><i class="fas fa-plus"></i> </span>
+                    <h2>Survey</h2>
+                </div>
+            </router-link>
+        </div>
+
+        <div class="nav">
+            <ul>
+                <li>
+                    <router-link to="/admin/survey/active">
+                        <span class="nav-icon">
+                            <i class="fas fa-poll"></i>
+                        </span>
+                        Active Surveys
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/admin/survey/scheduled">
+                        <span class="nav-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        Scheduled Surveys
+                    </router-link>
+                </li>
+                
+            </ul>
         </div>
     </div>
 </template>
@@ -55,6 +81,27 @@ export default {
     font-size: 2.4rem
 
 }
-
+.nav{
+    margin: 0 auto;
+    margin-top:4rem;
+    
+}
+.nav li a{
+    display: grid;
+    grid-template-columns: 50px auto;
+    align-items: center;
+    padding:1.5rem 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color:#1447b6 ;
+}
+.nav li a:hover,
+.router-link-exact-active{
+    color: #06227c !important;
+}
+.nav-icon{
+    margin-right: 1rem;
+    font-size: 3.5rem;
+}
 
 </style>

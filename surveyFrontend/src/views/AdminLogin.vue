@@ -131,6 +131,7 @@ export default {
             signin:{
                 first_name:"",
                 last_name:"",
+                name:"",
                 department:"",
                 email:"",
                 password:"",
@@ -196,7 +197,7 @@ export default {
                 console.log("res aaya ",res);
                 if(res.data.authenticated) {
                     localStorage.setItem("role","admin");
-                    localStorage.setItem("email",this.login.email);
+                    localStorage.setItem("user",JSON.stringify(res.data.user));
                     this.$router.push("/admin");
                 }
                 else{
@@ -218,8 +219,8 @@ export default {
                 console.log("res of put  ",res);
                 if(res.data.created) {
                     localStorage.setItem("role","admin");
-                    localStorage.setItem("admin_name",this.signin.first_name);
-                    localStorage.setItem("admin_email",this.signin.email);
+                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
+                    localStorage.setItem("user",JSON.stringify(this.signin));
                     this.$router.push("/admin");
                 }
                 else{

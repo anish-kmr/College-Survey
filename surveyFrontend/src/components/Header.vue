@@ -21,7 +21,7 @@
 
         <div class="nav" v-if="logged_in">
             <ul>
-                <li>{{email}}</li>
+                <li>{{user.name}}</li>
                 <li @click="logout">Logout</li>
             </ul>
         </div>
@@ -43,15 +43,20 @@ export default {
     data(){
         return{
             logged_in:null,
-            name:"",
-            email:"",
+            user:{
+                name:"",
+                email:"",
+                department:"",
+                id:"",
+            },
         }
     },
     beforeMount() {
         if(this.role==null) this.logged_in = false;
         else{ 
             this.logged_in = true;
-            this.email  = localStorage.getItem("email")
+            this.user  = JSON.parse(localStorage.getItem("user"))
+            console.log(this.user)
         }
     },
     methods: {
