@@ -142,8 +142,23 @@ export default {
                 password:"",
                 cnfpassword:"",
             },
-            options:["Maths","ES"],
+            options:[],
         }
+    },
+    beforeMount() {
+        axios.get(`http://www.localhost/surveyBackend/subjects/all`).then(res=>{
+            console.log("res aaya ",res);
+            if(res.data.subjects){
+                res.data.subjects.forEach(subject => {
+                    this.options.push(subject['name'])
+                });
+            }
+            else{
+              this.email_taken = true;
+              this.email_validated = false;
+            }
+
+        })
     },
     methods:{
         toggleForm(){
