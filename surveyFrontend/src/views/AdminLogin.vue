@@ -61,7 +61,17 @@
 
                         <div class="form-group">
                             <label for="email">Email: </label>
-                            <input type="email" name="email" id="email" v-model="signin.email">
+                            <input type="email" name="email" id="email" v-model="signin.email" @keyup="validateEmail" @change="validateEmail">
+                            
+                            <span v-if="email_validated" class="validate_success">
+                               <i class="fas fa-check-circle"></i>
+                            </span>
+                            <span v-if="!email_valid" class="validate_msg">
+                                Email Id is not Valid !
+                            </span>
+                            <span v-else-if="email_taken" class="validate_msg">
+                                Email Id is Alrerady taken !
+                            </span>
                         </div>
 
                         <div class="form-group">
@@ -69,15 +79,15 @@
                             <input type="text" name="dept" id="dept" v-model="signin.department">
                         </div>
 
-                                                <div class="form-group">    
+                        <div class="form-group">    
                             <label for="password">Password :  </label>
                             <input type="password" name="password" id="password" v-model="signin.password" @keyup="validatePassword">
                         </div>
 
                         <div class="form-group">    
                             <label for="cnfpassword"> Confirm Password :  </label>
-                            <input type="password" name="cnfpassword" id="cnfpassword" v-model="signin.cnfpassword" @keyup="validatePassword" :class="{match:!match}">
-                            <span v-if="!match" class="matchmsg">
+                            <input type="password" name="cnfpassword" id="cnfpassword" v-model="signin.cnfpassword" @keyup="validatePassword" :class="{password_match:!password_match}">
+                            <span v-if="!password_match" class="validate_msg">
                                 Passwords do not match.
                             </span>
                         </div>
@@ -110,7 +120,10 @@ export default {
         return{
             login_shown:true,
             signin_shown:false,
-            match:true,
+            password_match:true,
+            email_valid:true,
+            email_validated:false,
+            email_taken:false,
             login:{
                 email:"",
                 password:"",
@@ -129,6 +142,11 @@ export default {
         'app-header':Header,
         'app-footer':Footer,
     },
+    beforeCreate() {
+        if(localStorage.getItem("role") == "admin"){
+            this.$router.push("/admin");
+        }
+    },
     methods:{
         toggleForm(){
             this.login_shown=!this.login_shown;
@@ -139,9 +157,32 @@ export default {
             console.log(this.signin.cnfpassword)
             console.log(this.temp)
             if(this.signin.password != this.signin.cnfpassword){
-                this.match = false;
+                this.password_match = false;
             }else{
-                this.match=true;
+                this.password_match=true;
+            }
+        },
+        validateEmail(){
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.signin.email)){
+              this.email_valid = true;
+              axios.get(`http://www.localhost/surveyBackend/admin/validate_email?email=${this.signin.email}`).then(res=>{
+                  console.log("res aaya ",res);
+                  if(res.data.available){
+                    this.email_taken = false;
+                    this.email_validated=true;
+                  }
+                  else{
+                    this.email_taken = true;
+                    this.email_validated = false;
+                  }
+
+              })
+    
+            }
+            else{
+                this.email_valid = false;
+                this.email_taken = false;
+                this.email_validated = false;
             }
         },
         authenticate(ev){
@@ -153,6 +194,14 @@ export default {
             console.log(payload);
             axios.post("http://www.localhost/surveyBackend/admin/login",payload).then(res=>{
                 console.log("res aaya ",res);
+                if(res.data.authenticated) {
+                    localStorage.setItem("role","admin");
+                    localStorage.setItem("email",this.login.email);
+                    this.$router.push("/admin");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
             })
         },
         createAccount(ev){
@@ -167,6 +216,15 @@ export default {
             console.log(payload);
             axios.put("http://www.localhost/surveyBackend/admin/signin",payload).then(res=>{
                 console.log("res of put  ",res);
+                if(res.data.created) {
+                    localStorage.setItem("role","admin");
+                    localStorage.setItem("admin_name",this.signin.first_name);
+                    localStorage.setItem("admin_email",this.signin.email);
+                    this.$router.push("/admin");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
             })
         }
     },  

@@ -61,7 +61,16 @@
 
                         <div class="form-group">
                             <label for="email">Email: </label>
-                            <input type="email" name="email" id="email" v-model="signin.email">
+                            <input type="email" name="email" id="email" v-model="signin.email" @keyup="validateEmail" @change="validateEmail">
+                            <span v-if="email_validated" class="validate_success">
+                               <i class="fas fa-check-circle"></i>
+                            </span>
+                            <span v-if="!email_valid" class="validate_msg">
+                                Email Id is not Valid !;
+                            </span>
+                            <span v-else-if="email_taken" class="validate_msg">
+                                Email Id is Alrerady taken !;
+                            </span>
                         </div>
 
                         <div class="form-group">
@@ -117,6 +126,9 @@ export default {
             login_shown:true,
             signin_shown:false,
             match:true,
+            email_valid:true,
+            email_validated:false,
+            email_taken:false,
             login:{
                 email:"",
                 password:"",
@@ -146,6 +158,24 @@ export default {
                 this.match = false;
             }else{
                 this.match=true;
+            }
+        },
+        validateEmail(){
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.signin.email)){
+              this.email_valid = true;
+              axios.get(`http://www.localhost/surveyBackend/admin/validate_email?email=${this.signin.email}`).then(res=>{
+                  console.log("res aaya ",res);
+                  if(res.data.available){
+                    this.email_taken = false;
+                    this.email_validated=true;
+                  }
+                  else{
+                    this.email_taken = true;
+                    this.email_validated = false;
+                  }
+
+              })
+    
             }
         },
         authenticate(ev){

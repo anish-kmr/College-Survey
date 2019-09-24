@@ -41,7 +41,8 @@
 .form-box{
     padding:2rem 4rem;
     margin: 0 auto;
-    width:50%;
+    width:max-content;
+    
     box-shadow: 0 0 10px #707070;
 }
 .form-heading{
@@ -56,6 +57,8 @@
     width: 95%;
     margin:0 auto;
     margin-bottom: 2rem;
+
+    position: relative;
 }
 .form-group label,.type{
     display: block;
@@ -130,7 +133,15 @@
 .sm-text{
     font-size: 1.2rem
 }
-.matchmsg{
+.validate_msg{
     color:red;
     padding-left: 1rem;
+}
+.validate_success{
+    position: absolute;
+    top:50%;
+    left: 100%;;
+    color:green;
+    font-size: 2rem;
+    padding:0 1rem;
 }

@@ -49,7 +49,16 @@
                     <form>
                         <div class="form-group">
                             <label for="username">Enrollment No. : </label>
-                            <input type="text" name="username" id="username" v-model="signin.eno">
+                            <input type="text" name="username" id="username" v-model="signin.eno" @keyup="validateEno" @change="validateEno">
+                            <span v-if="eno_validated" class="validate_success">
+                               <i class="fas fa-check-circle"></i>
+                            </span>
+                            <span v-if="!eno_valid" class="validate_msg">
+                                Enrollment No. Id is not Valid ! Must be of length 8.
+                            </span>
+                            <span v-else-if="eno_taken" class="validate_msg">
+                                Enrollment No is Alrerady taken !;
+                            </span>
                         </div>
 
                         <div class="form-group multi-group">
@@ -65,7 +74,16 @@
 
                         <div class="form-group">
                             <label for="email">Email: </label>
-                            <input type="email" name="email" id="email" v-model="signin.email">
+                            <input type="email" name="email" id="email" v-model="signin.email" @keyup="validateEmail" @change="validateEmail">
+                            <span v-if="email_validated" class="validate_success">
+                               <i class="fas fa-check-circle"></i>
+                            </span>
+                            <span v-if="!email_valid" class="validate_msg">
+                                Email Id is not Valid !;
+                            </span>
+                            <span v-else-if="email_taken" class="validate_msg">
+                                Email Id is Alrerady taken !;
+                            </span>
                         </div>
 
                         <div class="form-group">
@@ -126,6 +144,12 @@ export default {
             login_shown:true,
             signin_shown:false,
             match:true,
+            eno_valid:true,
+            eno_validated:false,
+            eno_taken:false,
+            email_valid:true,
+            email_validated:false,
+            email_taken:false,
             login:{
                 email:"",
                 password:"",
@@ -153,6 +177,52 @@ export default {
                 this.match = false;
             }else{
                 this.match=true;
+            }
+        },
+        validateEmail(){
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.signin.email)){
+              this.email_valid = true;
+              axios.get(`http://www.localhost/surveyBackend/admin/validate_email?email=${this.signin.email}`).then(res=>{
+                  console.log("res aaya ",res);
+                  if(res.data.available){
+                    this.email_taken = false;
+                    this.email_validated=true;
+                  }
+                  else{
+                    this.email_taken = true;
+                    this.email_validated = false;
+                  }
+
+              })
+    
+            }
+            else{
+                this.email_valid = false;
+                this.email_taken = false;
+                this.email_validated = false;
+            }
+        },
+        validateEno(){
+            if (this.signin.eno.length==8){
+              this.eno_valid = true;
+              axios.get(`http://www.localhost/surveyBackend/student/validate_eno?eno=${this.signin.eno}`).then(res=>{
+                  console.log("res aaya ",res);
+                  if(res.data.available){
+                    this.eno_taken = false;
+                    this.eno_validated=true;
+                  }
+                  else{
+                    this.eno_taken = true;
+                    this.eno_validated = false;
+                  }
+
+              })
+    
+            }
+            else{
+                this.eno_valid = false;
+                this.eno_taken = false;
+                this.eno_validated = false;
             }
         },
          authenticate(ev){
