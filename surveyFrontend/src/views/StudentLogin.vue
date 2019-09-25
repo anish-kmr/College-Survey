@@ -44,7 +44,7 @@
                         <span>Signin in To</span>
                         <img src="../assets/logo.png" alt="">
                         <h2>College Survey</h2>
-                        <h2 class="designation">ADMIN</h2>
+                        <h2 class="designation">STUDENT</h2>
                     </div>
                     <form>
                         <div class="form-group">

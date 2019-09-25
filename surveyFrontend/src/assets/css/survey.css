@@ -5,9 +5,7 @@
 .side-list,.survey-details{
     height: 90vh;
     position: relative;
-}
-.side-list{
-    /* border-right: 1px solid #b4b4b4; */
+    overflow-x: hidden;
 }
 .side-list-header{
     padding:2rem 1rem;
@@ -33,7 +31,7 @@
     background-color: #ebeff1;
 }
 .router-link-exact-active{
-    background-color: #d3e2fd
+    background-color: #d3e2fd;
 }
 
 .survey-details{

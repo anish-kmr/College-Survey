@@ -153,10 +153,6 @@ export default {
                     this.options.push(subject['name'])
                 });
             }
-            else{
-              this.email_taken = true;
-              this.email_validated = false;
-            }
 
         })
     },
@@ -178,7 +174,7 @@ export default {
         validateEmail(){
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.signin.email)){
               this.email_valid = true;
-              axios.get(`http://www.localhost/surveyBackend/admin/validate_email?email=${this.signin.email}`).then(res=>{
+              axios.get(`http://www.localhost/surveyBackend/faculty/validate_email?email=${this.signin.email}`).then(res=>{
                   console.log("res aaya ",res);
                   if(res.data.available){
                     this.email_taken = false;
@@ -191,6 +187,11 @@ export default {
 
               })
     
+            }
+            else{
+                this.email_valid = false;
+                this.email_taken = false;
+                this.email_validated = false;
             }
         },
         authenticate(ev){
