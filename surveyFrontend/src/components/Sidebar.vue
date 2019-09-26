@@ -19,7 +19,7 @@
                         Active Surveys
                     </router-link>
                 </li>
-                <li>
+                <li >
                     <router-link to="/admin/survey/scheduled">
                         <span class="nav-icon">
                             <i class="fas fa-calendar-alt"></i>

@@ -7,9 +7,10 @@ import FacultyLogin from './views/FacultyLogin.vue'
 import StudentLogin from './views/StudentLogin.vue'
 import AdminLogin from './views/AdminLogin.vue'
 import AdminDashboard from './views/AdminDashboard.vue'
-import ActiveSurveys from './views/ActiveSurveys.vue'
-import CreateSurvey from './views/CreateSurvey.vue'
+import Surveys from './views/Surveys.vue'
 import SurveyDetails from './views/SurveyDetails.vue'
+import CreateSurvey from './views/CreateSurvey.vue'
+import CreateSurveyDetails from './views/CreateSurveyDetails.vue'
 
 
 Vue.use(VueRouter)
@@ -51,18 +52,22 @@ const router = new VueRouter({
             {
               path:':type',
               props:true,
-              component:SurveyDetails,
+              component:CreateSurveyDetails,
             }
           ]
         },
         {
-          path:'survey/active',
-          component:ActiveSurveys, 
+          path:'survey/:status',
+          props:true,
+          component:Surveys, 
+          children:[
+            {
+              path:':id',
+              component:SurveyDetails,
+              props:true,
+            }
+          ]
         },
-        {
-          path:'survey/scheduled',
-          component:ActiveSurveys, 
-        }
       ]
     }
   ],

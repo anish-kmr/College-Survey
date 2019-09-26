@@ -16,6 +16,7 @@
     color: #1447b6;
     font-size: 1.7rem;
     font-weight:bolder;
+    text-transform: capitalize;
 }
 
 .side-list ul li a{
@@ -30,10 +31,15 @@
 .side-list ul li a:hover{
     background-color: #ebeff1;
 }
-.router-link-exact-active{
+.side-list .router-link-exact-active{
     background-color: #d3e2fd;
 }
 
 .survey-details{
     background-color: #d3e2fd;
 }
+
+
+
+
+

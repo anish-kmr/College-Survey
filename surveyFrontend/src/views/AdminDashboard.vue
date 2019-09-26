@@ -2,7 +2,7 @@
     <div>
         <app-header :role="'admin'"></app-header>
         <div class="grid">
-            <sidebar></sidebar>
+            <sidebar ></sidebar>
             <div class="main-area">
                 <router-view></router-view>
             </div>
@@ -24,6 +24,7 @@ export default {
     data(){
         return{
             user :"",
+            status:null,
         }
     },
     beforeMount() {

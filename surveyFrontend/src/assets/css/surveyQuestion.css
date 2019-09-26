@@ -1,0 +1,181 @@
+
+/*Survey questions */
+
+.details-header,.settings-header{
+    position: relative;
+    padding:2rem 1rem;
+    height: 7.5rem;
+    border-bottom: 2px solid #b8b8b8;
+}
+.details-header h2{
+    display: inline-block;
+    font-size: 3rem;
+    color: #707070;
+    text-transform: capitalize;
+    margin-top: 1rem;
+}
+.settings-header h2{
+    font-size: 2rem;
+    margin-top: 1.4rem;
+    color: #707070;
+    text-transform: capitalize;
+}
+.details-header span{
+    padding:0 2rem;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.controls{
+    position: absolute;
+    bottom: 0;
+    right:50px;
+    height: 80%;
+    display: grid;
+    align-items: center;
+}
+.controls i{
+    font-size: 2.5rem;
+}
+.controls>div:hover{
+    cursor: pointer;
+}
+
+.details-body{
+    height:calc(90vh - 10rem);
+    overflow-y: auto;
+}
+.qs-container{
+    width: 88%;
+    margin:2rem auto;
+}
+.question{
+    margin-bottom: 4rem;
+    position: relative;
+}
+.qs-statement{
+    color: #3a3939;
+    margin-bottom: 1rem;
+}
+.qno{
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    font-weight: bolder
+}
+.qs-statement h2{
+    display: inline-block;
+    font-size: 2rem;
+}
+.qs-options{
+    margin-left:2rem;
+}
+.option{
+    margin: .4rem;
+    width: 30px;
+    height:30px;
+}
+.option img{
+    width: 30px;
+    height: 30px;
+}
+.edit-icon{
+    position: absolute;
+    top: 5px;;
+    left:-30px;
+}
+.edit-icon i{
+    color: #707070;
+    font-size: 1.6rem;
+}
+.edit-qs input{
+    background: none;
+    padding:0 1.2rem;
+    box-shadow:none;
+    border: none;
+    width: 100%;
+    font-size: 2rem;
+    border-bottom: 1px dashed #707070;
+}
+input:focus{
+    outline: none;
+}
+
+.survey-settings{
+    height: 90vh;
+    width: 60%;
+    position: absolute;
+    top: 0;
+    right: -60%;
+    background-color: white;
+    height: 100%;
+    transition: .7s all;
+}
+.close{
+    display: inline-block;
+    position: absolute;
+    top: 45%;
+    right:50px;
+    font-size: 2rem;
+    color: #707070
+}
+.close:hover{
+    cursor: pointer;
+}
+.open-settings{
+    right: 0;
+}
+.settings-body{
+    height:calc(90vh - 10rem) ;
+    overflow-y: auto;
+}
+.setting,.faculty-list{
+    padding:0 2rem;
+    margin-top: 2.5rem;
+}
+.setting h2{
+    color: #3a3939;
+    font-size: 1.8rem;
+}
+.faculty-list ul li{
+    margin-bottom: 1.6rem;
+}
+.faculty-list ul li label{
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns:8% 80% auto;
+    align-items: center;
+    text-transform: capitalize;
+}
+.sno{
+    align-self: baseline;
+    margin-top: .4rem;
+}
+.faculty-name h2{color: #555555;}
+.faculty-name h4{color: #8a8a8a;}
+.select-all{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin-bottom: 2rem;
+}
+.faculty-list ul li:nth-child(1){
+
+    border-bottom: 2px solid #9c9c9c;
+}
+.secondary-btn,.cancel-btn,.primary-btn{
+    position: absolute;
+    bottom:50px;
+}
+.secondary-btn{left: 25px;}
+.cancel-btn{right: 25px;}
+.primary-btn{right: 150px;}
+.done-btn{
+    text-align: right;
+    padding:1rem 6rem;
+    margin-bottom: 2rem;
+}
+
+.hidden{
+    display: none !important;
+}
