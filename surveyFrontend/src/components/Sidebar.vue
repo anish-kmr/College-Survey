@@ -11,7 +11,7 @@
 
         <div class="nav">
             <ul>
-                <li>
+                <li @click="f">
                     <router-link to="/admin/survey/active">
                         <span class="nav-icon">
                             <i class="fas fa-poll"></i>
@@ -42,6 +42,11 @@ export default {
     },
     beforeMount() {
         this.role = localStorage.getItem("role")
+    },
+    methods: {
+        f(){
+            this.$parent.forceRender();
+        }
     },
 }
 </script>

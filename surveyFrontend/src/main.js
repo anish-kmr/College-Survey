@@ -56,6 +56,7 @@ const router = new VueRouter({
             }
           ]
         },
+        
         {
           path:'survey/:status',
           props:true,

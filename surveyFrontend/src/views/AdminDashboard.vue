@@ -4,7 +4,7 @@
         <div class="grid">
             <sidebar ></sidebar>
             <div class="main-area">
-                <router-view></router-view>
+                <router-view :key="compKey"></router-view>
             </div>
         </div>
        
@@ -25,6 +25,7 @@ export default {
         return{
             user :"",
             status:null,
+            compKey:1,
         }
     },
     beforeMount() {
@@ -36,6 +37,11 @@ export default {
             this.$router.push("/admin/login");
         }
     },  
+    methods: {
+        forceRender(){
+            this.compKey=-this.compKey;
+        }
+    },
 }
 </script>
 
