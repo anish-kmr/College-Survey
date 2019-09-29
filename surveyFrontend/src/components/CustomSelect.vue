@@ -13,7 +13,7 @@
             <span v-for="option in options" :key="option" class="option-tag" @click="select(option)">
                 {{option}}
             </span>
-            <div class="add">
+            <div class="add" v-if="add">
                 <h2>Add Subject</h2>
                 <span class="add-form">
                         <input type="text" v-model="addedOption" @keydown.enter=addOption>
@@ -32,6 +32,15 @@ export default {
     props: {
         selected_options:Array,
         options:Array,
+        add:Boolean,
+        onSelect:{
+            type:Function,
+            default:null,
+        },
+        onUnselect:{
+            type:Function,
+            default:null,
+        }
     },
     data(){
         return{
@@ -41,10 +50,12 @@ export default {
     },
     methods: {
         select(option){
-            if(this.selected_options.indexOf(option)<0)  this.selected_options.push(option)
+            if(this.selected_options.indexOf(option)<0)  this.selected_options.push(option);
+            this.onSelect(option);
         },
         unselect(key){
            var a= this.selected_options.splice(key,1);
+           this.onUnselect();
             console.log(a)
         },
         addOption(ev){

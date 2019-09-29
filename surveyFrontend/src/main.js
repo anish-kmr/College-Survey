@@ -7,6 +7,7 @@ import FacultyLogin from './views/FacultyLogin.vue'
 import StudentLogin from './views/StudentLogin.vue'
 import AdminLogin from './views/AdminLogin.vue'
 import AdminDashboard from './views/AdminDashboard.vue'
+import FacultyDashboard from './views/FacultyDashboard.vue'
 import Surveys from './views/Surveys.vue'
 import SurveyDetails from './views/SurveyDetails.vue'
 import CreateSurvey from './views/CreateSurvey.vue'
@@ -57,6 +58,28 @@ const router = new VueRouter({
           ]
         },
         
+        {
+          path:'survey/:status',
+          props:true,
+          component:Surveys, 
+          children:[
+            {
+              path:':id',
+              component:SurveyDetails,
+              props:true,
+            }
+          ]
+        },
+      ]
+    },
+    {
+      path:'/faculty',
+      component:FacultyDashboard,
+      children:[
+        {
+          path:'',
+          redirect:'survey/active'
+        },
         {
           path:'survey/:status',
           props:true,

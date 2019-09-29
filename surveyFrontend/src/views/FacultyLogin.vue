@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-header></app-header>
-        <div class="box flip-box">
+        <div class="box flip-box faculty">
             <div class="login-form" v-if="login_shown">
                 <div class="form-box">
                     <!-- <h4 class="form-heading">Login To College Survey </h4> -->
@@ -80,7 +80,23 @@
 
                         <div class="form-group">
                             <label for="subjects">Subjects: </label>
-                            <custom-select :options="options" :selected_options="signin.selected_options"> </custom-select>
+                            <custom-select :options="options" :add="true" :selected_options="signin.selected_options"> </custom-select>
+                        </div>
+                        <div class="form-group">
+                            <label for="batches">Batches: </label>
+                            <div class="batch-selection">
+                                <div class="subject" v-for="(sub,i) in signin.selected_options" :key="i" >   
+                                    <div class="subject-name">
+                                        <h2>{{sub}}</h2>
+                                    </div>
+                                    <div class="year">
+                                        <custom-select :options="year_options"  :add="false"></custom-select>
+                                    </div>
+                                    <div class="batch">
+                                        <custom-select :options="batch_options" :add="true"></custom-select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">    
@@ -137,12 +153,20 @@ export default {
                 first_name:"",
                 last_name:"",
                 department:"",
-                selected_options:[],
+                selected_options:["ES"],
+                selected_classes:[],
                 email:"",
                 password:"",
                 cnfpassword:"",
             },
             options:[],
+            batch_options:["B1","B2","B3","B4"],
+            year_options:["1st Year","2nd Year","3rd Year","4th Year"],
+        }
+    },
+    beforeCreate() {
+        if(localStorage.getItem("role") == "faculty"){
+            this.$router.push("/faculty");
         }
     },
     beforeMount() {
@@ -203,6 +227,14 @@ export default {
             console.log(payload);
             axios.post("http://www.localhost/surveyBackend/faculty/login",payload).then(res=>{
                 console.log("res aaya ",res);
+                if(res.data.authenticated) {
+                    localStorage.setItem("role","faculty");
+                    localStorage.setItem("user",JSON.stringify(res.data.user));
+                    this.$router.push("/faculty");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
             })
         },
         createAccount(ev){
@@ -218,6 +250,15 @@ export default {
            console.log(payload);
            axios.put("http://www.localhost/surveyBackend/faculty/signin",payload).then(res=>{
                console.log("res of put  ",res);
+               if(res.data.created) {
+                    localStorage.setItem("role","faculty");
+                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
+                    localStorage.setItem("user",JSON.stringify(this.signin));
+                    this.$router.push("/faculty");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
            })
         }
     },

@@ -25,11 +25,11 @@
 
                     </div>
                     <div class="qs-options">
-                        <span class="option"><img src="../assets/emoticons/angry.png" alt=""></span>
-                        <span class="option"><img src="../assets/emoticons/sad.png" alt=""></span>
-                        <span class="option"><img src="../assets/emoticons/neutral.png" alt=""></span>
-                        <span class="option"><img src="../assets/emoticons/slight_smile.png" alt=""></span>
-                        <span class="option"><img src="../assets/emoticons/smile.png" alt=""></span>
+                        <span class="option"><img src="../assets/emoticons/1.png" alt=""></span>
+                        <span class="option"><img src="../assets/emoticons/2.png" alt=""></span>
+                        <span class="option"><img src="../assets/emoticons/3.png" alt=""></span>
+                        <span class="option"><img src="../assets/emoticons/4.png" alt=""></span>
+                        <span class="option"><img src="../assets/emoticons/5.png" alt=""></span>
 
                     </div>
 

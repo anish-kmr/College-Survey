@@ -78,6 +78,28 @@
 .option img{
     width: 30px;
     height: 30px;
+    transition: .2s all;
+}
+
+.answerable>.option>img:hover {
+    cursor: pointer;
+    transform: scale(1.4,1.4);
+}
+.answerable input{
+    display: none;
+}
+
+.response{
+    float: right;
+    padding:0 1.5rem;
+    border-left:2px solid #bdbdbd; 
+}
+.give-feedback{
+    /* padding: 1rem 5rem;
+    text-align: right; */
+    position: absolute;
+    bottom: 5rem;
+    right: 2.5rem;
 }
 .edit-icon{
     position: absolute;

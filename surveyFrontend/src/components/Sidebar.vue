@@ -12,7 +12,7 @@
         <div class="nav">
             <ul>
                 <li @click="f">
-                    <router-link to="/admin/survey/active">
+                    <router-link :to="'/'+role+'/survey/active'">
                         <span class="nav-icon">
                             <i class="fas fa-poll"></i>
                         </span>
@@ -20,12 +20,7 @@
                     </router-link>
                 </li>
                 <li >
-                    <router-link to="/admin/survey/scheduled">
-                        <span class="nav-icon">
-                            <i class="fas fa-calendar-alt"></i>
-                        </span>
-                        Scheduled Surveys
-                    </router-link>
+                    
                 </li>
                 
             </ul>

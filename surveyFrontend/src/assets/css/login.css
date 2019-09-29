@@ -45,6 +45,9 @@
     min-width: 50%;
     box-shadow: 0 0 10px #707070;
 }
+.faculty .form-box{
+    min-width: 60%;
+}
 .form-heading{
     font-size: 3rem;
     font-weight: normal;
@@ -144,4 +147,37 @@
     color:green;
     font-size: 2rem;
     padding:0 1rem;
+}
+
+.batch-selection{
+    min-height: 40px;
+    border-top-right-radius:8px;
+    border-top-left-radius:8px;
+    border:1px solid #a3a2a2d2;
+    padding:10px 20px;
+    position: relative;
+    max-height: 160px;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+.batch-selection .subject{
+    display: grid;
+    grid-template-columns: 15% 1fr 1fr;
+    grid-gap: 1% ;
+
+}
+.subject .year,.subject .batch{
+    max-width: 290px;
+}
+.subject-name h2{
+    background-color: #3f3f3f;
+    padding:4px 8px;
+    min-width: 20px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.5rem;
+    margin: 5px;
 }
