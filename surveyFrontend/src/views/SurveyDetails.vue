@@ -2,7 +2,6 @@
     <div>
         <div class="details-header"> 
            <h2>{{selected_survey.name}}</h2>
-           <h2>{{selected_survey.surveyID}}</h2>
            <div class="controls">
                <div class="settings-icon" @click="toggleSettings">
                    <i class="fas fa-info-circle"></i>

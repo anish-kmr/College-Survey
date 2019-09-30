@@ -212,6 +212,7 @@ export default {
     methods:{
         selectSubject(sub_name){
             this.signin.selected_classes[sub_name]={year1:[],year2:[],year3:[],year4:[]}
+            console.log("subbjecttt is ",sub_name)
         },
         selectYear(y){
             console.log("yearr",this.signin.selected_classes)
@@ -220,9 +221,12 @@ export default {
             this.login_shown=!this.login_shown;
             this.signin_shown=!this.signin_shown;
         },
-        toggleSubjectDetails(){
+        toggleSubjectDetails(ev){
+
+            ev.preventDefault();
             this.subjects_shown=!this.subjects_shown;
             this.signin_shown=!this.signin_shown;
+            console.log("signin",this.signin)
         },
         validatePassword(){
             console.log(this.password)

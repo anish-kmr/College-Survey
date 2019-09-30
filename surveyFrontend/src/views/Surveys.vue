@@ -15,8 +15,10 @@
                 <ul >
                     <li v-for="survey in surveys" @click="changeSelectedSurvey(survey)" :key="survey.surveyID">
                         <router-link :to="'/'+role+'/survey/'+status+'/'+survey.surveyID"> 
-                            {{survey.name}}
-                            {{survey.surveyID}}
+                            <div class="survey-name">
+                                <h2>{{survey.name}}</h2>
+                                <p >{{survey.subjectName}}</p>
+                            </div>
                         </router-link>
                     </li>
                 </ul>

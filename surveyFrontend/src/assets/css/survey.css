@@ -20,7 +20,7 @@
 }
 
 .side-list ul li a{
-    padding: 2rem 2.5rem;
+    padding: 2rem;
     display: block;
     font-size: 1.4rem;
     font-weight:600 !important;
@@ -39,7 +39,16 @@
     background-color: #d3e2fd;
 }
 
-
+.survey-name h2{
+    /* outline: 2px solid red; */
+    font-size: 1.8rem;
+}
+.survey-name p{
+    /* outline: 2px solid red; */
+    font-size: 1.4rem;
+    color: #9c9c9c;
+    margin-top: .5rem;
+}
 
 
 

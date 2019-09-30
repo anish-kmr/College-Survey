@@ -62,6 +62,10 @@ export default {
             if (this.options.findIndex((o) => o.toLowerCase() === op.toLowerCase()) <0){ 
                 this.options.push(op);
                 this.selected_options.push(op);
+                if(this.onSelect){
+                    this.onSelect(op)
+                    console.log("its a fn");
+                };
             }
             
             this.addedOption = "";
