@@ -1,6 +1,6 @@
 <template>
     <div>
-        <app-header :role="'faculty'"></app-header>
+        <app-header :role="'student'"></app-header>
         <div class="grid">
             <sidebar ></sidebar>
             <div class="main-area">
@@ -29,12 +29,12 @@ export default {
         }
     },
     beforeMount() {
-        if(localStorage.getItem("role")=='faculty'){
+        if(localStorage.getItem("role")=='student'){
             this.user = JSON.parse(localStorage.getItem('user'));
 
         }
         else{
-            this.$router.push("/faculty/login");
+            this.$router.push("/student/login");
         }
     },  
     methods: {

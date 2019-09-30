@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div class="details-header">
+        <div class="details-header"> 
            <h2>{{selected_survey.name}}</h2>
+           <h2>{{selected_survey.surveyID}}</h2>
            <div class="controls">
                <div class="settings-icon" @click="toggleSettings">
                    <i class="fas fa-info-circle"></i>
@@ -14,17 +15,19 @@
                 <div class="question" v-for="(qs,i) in selected_survey.questions" :key="i" :class="'qs-'+i">
                     <div class="qs-statement">
                         <div :id="'qsst-'+i">
-                             <span class="qno">{{i+1}}. </span> <h2> {{qs}} </h2>
+                             <span class="qno">{{i+1}}. </span> <h2> {{qs.statement}} </h2>
                         </div>
                     </div>
-                    <div class="qs-options" v-if="role=='admin' || selected_survey.type =='faculty'">
+                    <div class="qs-options" v-if="role!='student'">
                         <span class="option"><img src="../assets/emoticons/1.png" alt=""></span>
                         <span class="option"><img src="../assets/emoticons/2.png" alt=""></span>
                         <span class="option"><img src="../assets/emoticons/3.png" alt=""></span>
                         <span class="option"><img src="../assets/emoticons/4.png" alt=""></span>
                         <span class="option"><img src="../assets/emoticons/5.png" alt=""></span>
                     </div>
-                    <div class="qs-options answerable" v-else-if="role=='student'|| selected_survey.type !=='faculty'">
+
+
+                    <div class="qs-options answerable" v-else-if="role=='student'">
                         <label v-for="j in 5" class="option" @click="answer(i,j)" :key="j">
                             <input type="radio" v-model="selected_survey.feedback[i]" :value="j" id="">
                             <img :src="'/src/assets/emoticons/'+j+'.png'" alt="">
@@ -36,7 +39,7 @@
                 </div>
             </div>
 
-            <div class="give-feedback" v-if="role=='student'|| selected_survey.type !=='faculty'">
+            <div class="give-feedback" v-if="role=='student'">
                 <button>Give Feedack </button>
             </div>
         </div>
@@ -100,6 +103,7 @@ export default {
     
     beforeMount() {
         this.role = localStorage.getItem("role");
+        console.log("feedbbback",this.selected_survey)
     },
     methods: {
         answer(i,response){

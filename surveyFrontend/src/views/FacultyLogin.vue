@@ -80,25 +80,9 @@
 
                         <div class="form-group">
                             <label for="subjects">Subjects: </label>
-                            <custom-select :options="options" :add="true" :selected_options="signin.selected_options"> </custom-select>
+                            <custom-select :options="options" :add="true" :onSelect="selectSubject" :selected_options="signin.selected_options"> </custom-select>
                         </div>
-                        <div class="form-group">
-                            <label for="batches">Batches: </label>
-                            <div class="batch-selection">
-                                <div class="subject" v-for="(sub,i) in signin.selected_options" :key="i" >   
-                                    <div class="subject-name">
-                                        <h2>{{sub}}</h2>
-                                    </div>
-                                    <div class="year">
-                                        <custom-select :options="year_options"  :add="false"></custom-select>
-                                    </div>
-                                    <div class="batch">
-                                        <custom-select :options="batch_options" :add="true"></custom-select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                       
                         <div class="form-group">    
                             <label for="password">Password :  </label>
                             <input type="password" name="password" id="password" v-model="signin.password" @keyup="validatePassword">
@@ -114,7 +98,7 @@
 
                         <div class="form-group">
                             <div class="submit-btn">
-                                <button class="btn" @click="createAccount">Create Account</button>
+                                <button class="btn" @click="toggleSubjectDetails">Next</button>
                             </div>
 
                         </div>
@@ -124,6 +108,50 @@
                     </div>
                 </div>
             </div>
+
+            <div class="subjects-form" v-if="subjects_shown">
+                <div class="form-box subject-box">
+                    <div class="form-group">
+                       <label for="batches">Batches: </label>
+                       <div class="batch-selection">
+                           <div class="subject headers">
+                               <div class="subject-heading">
+                                   <h2>Subjects</h2>
+                               </div>
+                               <div class="classes">
+                                   <h2>1st Year</h2>
+                                   <h2>2nd Year</h2>
+                                   <h2>3rd Year</h2>
+                                   <h2>4th Year</h2>
+                               </div>
+                           </div>
+                           <div class="subject" v-for="(sub,i) in signin.selected_options" :key="i" >   
+                               <div class="subject-name">
+                                   <h2>{{sub}}</h2>
+                               </div>
+                               <div class="classes">
+                                   <div class="year" v-for="i in 4" :key="i">
+                                        <!-- <div class="batch"> -->
+                                            <custom-select :options="batch_options" :selected_options="signin.selected_classes[sub]['year'+i]" :add="true"></custom-select>
+                                        <!-- </div> -->
+                                   </div>
+                               </div>
+                               
+                           </div>
+                       </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="submit-btn">
+                            <button class="btn" @click="createAccount">Create Account</button>
+                        </div>
+                        <div class="back-btn">
+                            <button class="btn" @click="toggleSubjectDetails">Go Back</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
         <app-footer></app-footer>
     </div>
@@ -139,8 +167,9 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            login_shown:true,
-            signin_shown:false,
+            login_shown:false,
+            signin_shown:true,
+            subjects_shown:false,
             match:true,
             email_valid:true,
             email_validated:false,
@@ -153,8 +182,8 @@ export default {
                 first_name:"",
                 last_name:"",
                 department:"",
-                selected_options:["ES"],
-                selected_classes:[],
+                selected_options:[],
+                selected_classes:{},
                 email:"",
                 password:"",
                 cnfpassword:"",
@@ -181,8 +210,18 @@ export default {
         })
     },
     methods:{
+        selectSubject(sub_name){
+            this.signin.selected_classes[sub_name]={year1:[],year2:[],year3:[],year4:[]}
+        },
+        selectYear(y){
+            console.log("yearr",this.signin.selected_classes)
+        },
         toggleForm(){
             this.login_shown=!this.login_shown;
+            this.signin_shown=!this.signin_shown;
+        },
+        toggleSubjectDetails(){
+            this.subjects_shown=!this.subjects_shown;
             this.signin_shown=!this.signin_shown;
         },
         validatePassword(){
@@ -245,6 +284,7 @@ export default {
                email:this.signin.email,
                department:this.signin.department,
                subjects:this.signin.selected_options,
+               batches:this.signin.selected_classes,
                password:this.signin.password,
            }
            console.log(payload);

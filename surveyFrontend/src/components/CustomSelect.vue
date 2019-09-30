@@ -1,8 +1,9 @@
 <template>
     <div id="custom-select">
+         <i style="display:none"> {{a}}</i>
         <div class="selected-area" >
             <span v-for="(selected,key) in selected_options" :key="key" @click="unselect(key)" class="selected-tag">
-                {{selected}} 
+                {{selected}}
                 <span class="delete">&times;</span> 
             </span>
             <span class="arrow" @click="dropped=!dropped">
@@ -17,13 +18,10 @@
                 <h2>Add Subject</h2>
                 <span class="add-form">
                         <input type="text" v-model="addedOption" @keydown.enter=addOption>
-                        <input type="button" value="Add" @click="addOption">
-                
-                    
+                        <input type="button" value="Add" @click="addOption">                    
                 </span>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -37,26 +35,26 @@ export default {
             type:Function,
             default:null,
         },
-        onUnselect:{
-            type:Function,
-            default:null,
-        }
     },
     data(){
         return{
             addedOption:"",
             dropped:false,
+            a:1,
         }
     },
     methods: {
         select(option){
             if(this.selected_options.indexOf(option)<0)  this.selected_options.push(option);
-            this.onSelect(option);
+            console.log(this.selected_options)
+            if(this.onSelect){
+                this.onSelect(option)
+                console.log("its a fn");
+            };
+            this.a = -this.a
         },
         unselect(key){
            var a= this.selected_options.splice(key,1);
-           this.onUnselect();
-            console.log(a)
         },
         addOption(ev){
             ev.preventDefault();    

@@ -182,7 +182,7 @@ export default {
         validateEmail(){
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.signin.email)){
               this.email_valid = true;
-              axios.get(`http://www.localhost/surveyBackend/admin/validate_email?email=${this.signin.email}`).then(res=>{
+              axios.get(`http://www.localhost/surveyBackend/student/validate_email?email=${this.signin.email}`).then(res=>{
                   console.log("res aaya ",res);
                   if(res.data.available){
                     this.email_taken = false;
@@ -234,6 +234,14 @@ export default {
             console.log(payload);
             axios.post("http://www.localhost/surveyBackend/student/login",payload).then(res=>{
                 console.log("res aaya ",res);
+                if(res.data.authenticated) {
+                    localStorage.setItem("role","student");
+                    localStorage.setItem("user",JSON.stringify(res.data.user));
+                    this.$router.push("/student");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
             })
         },
         createAccount(ev){
@@ -251,6 +259,15 @@ export default {
             console.log(payload);
             axios.put("http://www.localhost/surveyBackend/student/signin",payload).then(res=>{
                 console.log("res of put  ",res);
+                if(res.data.created) {
+                    localStorage.setItem("role","student");
+                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
+                    localStorage.setItem("user",JSON.stringify(this.signin));
+                    this.$router.push("/student");
+                }
+                else{
+                    alert("DIDNTT SIggned in")
+                }
             })
         }
     },
