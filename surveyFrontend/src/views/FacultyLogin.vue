@@ -167,8 +167,8 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            login_shown:false,
-            signin_shown:true,
+            login_shown:true,
+            signin_shown:false,
             subjects_shown:false,
             match:true,
             email_valid:true,

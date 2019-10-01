@@ -100,9 +100,12 @@ export default {
                         res.data.forEach(s => {
                             if (s.type=="faculty") {
                                 axios.get(`http://www.localhost/surveyBackend/survey/faculties?surveyID=${s.surveyID}`).then(res=>{
-                                    s.faculties_included = res.data; 
-                                    s.faculties_included.forEach(f=>{
+                                    res.data.forEach(f=>{
                                        if(f.facultyID==this.user.facultyID){
+                                           axios.get(`http://www.localhost/surveyBackend/survey/analysis?facultyID=${f.facultyID}&surveyID=${s.surveyID}`).then(res=>{
+                                               console.log("analusos",res);
+                                               s.analysis = res.data;
+                                           })
                                            this.surveys.push(s);
                                        };
                                     });
@@ -112,34 +115,19 @@ export default {
                                          if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
                                     }
                                     
-                                });
+                                })
                             }; 
                         })
                     }
-                    // console.log("sueu",this.surveys[0])
-                    // this.selected_survey=this.surveys[0];
-                    // console.log("selected",this.selected_survey)
-                    //  if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
-                   
-
                 })
                 
             }
         },
-        // getIncludedFaculties(){
-        //     axios.get(`http://www.localhost/surveyBackend/survey/faculties?surveyID=${this.selected_survey.surveyID}`).then(res=>{
-        //         console.log("facincluded : ",res);
-        //         this.faculties_included=res.data;
-        //     })
-        // },
-        getIncludedFaculties(sid){
-            var fi = [];
-            axios.get(`http://www.localhost/surveyBackend/survey/faculties?surveyID=${sid}`).then(res=>{
-                console.log("facincluded : ",res);
-                fi=res.data;
-                
-            });
-        },
+        getSurveyAnalysis(){
+            
+        }
+
+        
     },
 }
 </script>

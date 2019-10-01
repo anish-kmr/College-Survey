@@ -28,18 +28,18 @@
 
                     <div class="qs-options answerable" v-else-if="role=='student'">
                         <label v-for="j in 5" class="option" @click="answer(i,j)" :key="j">
-                            <input type="radio" v-model="selected_survey.feedback[i]" :value="j" id="">
+                            <input type="radio" v-model="selected_survey.feedback[i].response" :value="j" id="">
                             <img :src="'/src/assets/emoticons/'+j+'.png'" alt="">
                         </label>
-                        <span class="response" v-if="selected_survey.feedback[i]" >
-                            <label class="option"><img :src="'/src/assets/emoticons/'+selected_survey.feedback[i]+'.png'" alt=""></label>
+                        <span class="response" v-if="selected_survey.feedback[i].response" >
+                            <label class="option"><img :src="'/src/assets/emoticons/'+selected_survey.feedback[i].response+'.png'" alt=""></label>
                         </span>
                     </div>
                 </div>
             </div>
 
             <div class="give-feedback" v-if="role=='student'">
-                <button>Give Feedack </button>
+                <button @click="giveFeedback">Give Feedack </button>
             </div>
         </div>
 
@@ -72,7 +72,17 @@
                                     </div>
                                 </li> 
                             </template>
-                            <template>
+                            <template v-if="selected_survey.analysis">
+                                <li >
+                                    <div class="analysis">
+                                        
+                                        {{selected_survey.analysis.total_feedbacks_given}} out of {{selected_survey.analysis.total_students}} Students
+                                        have Submitted their feedbacks.
+
+                                    </div>
+                                </li> 
+                            </template>
+                            <template  v-else>
                                 <li>
                                    <h2> No more Details for this survey.</h2>
                                 </li>
@@ -96,17 +106,37 @@ export default {
     data(){
         return{
             role:"",
+            user:"",
         }
     },
     
     
     beforeMount() {
         this.role = localStorage.getItem("role");
+        this.user=JSON.parse(localStorage.getItem("user"));
+
         console.log("feedbbback",this.selected_survey)
     },
     methods: {
+        giveFeedback(){
+            console.log("ggoing to ffeedback",this.selected_survey)
+            var payload = {
+                adminID:this.selected_survey.adminID,
+                facultyID:this.selected_survey.facultyID,
+                surveyID:this.selected_survey.surveyID,
+                studentID:this.user.studentID,
+                feedback:this.selected_survey.feedback
+            }
+            axios.put("http://www.localhost/surveyBackend/feedback/create",payload).then(res=>{
+                console.log("rrres ",res.data);
+                if (res.data.success) {
+                    alert("successfully Subbmitted FFeedback")
+                }
+                else if(res.data.updated) alert("Changed Responses");
+            })
+        },
         answer(i,response){
-            this.selected_survey.feedback[i] = response;
+            this.selected_survey.feedback[i].response = response;
             console.log(this.selected_survey.feedback)
         },        
         toggleSettings(){
