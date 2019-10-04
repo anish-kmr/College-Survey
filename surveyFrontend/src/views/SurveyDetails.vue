@@ -44,7 +44,7 @@
         </div>
 
 
-        <div class="survey-settings">
+        <div class="survey-settings" :class="{'open-settings':settings_open}">
             <div class="settings-header">
                 <h2>Survey Info</h2>
                 <div class="close" @click="toggleSettings">
@@ -72,19 +72,19 @@
                                     </div>
                                 </li> 
                             </template>
-                            <template v-if="selected_survey.analysis">
+                            <template v-if="analysis">
                                 <li >
                                     <div class="analysis">
-                                        
-                                        {{selected_survey.analysis.total_feedbacks_given}} out of {{selected_survey.analysis.total_students}} Students
-                                        have Submitted their feedbacks.
-
+                                        <h2>
+                                            {{analysis.total_feedbacks_given}} out of {{analysis.total_students}} Students
+                                            have Submitted their feedbacks.
+                                        </h2>
                                     </div>
                                 </li> 
                             </template>
                             <template  v-else>
                                 <li>
-                                   <h2> No more Details for this survey.</h2>
+                                   <h2> No more Detils for this survey.</h2>
                                 </li>
                             </template>
                         </ul>
@@ -107,6 +107,8 @@ export default {
         return{
             role:"",
             user:"",
+            analysis:{},
+            settings_open:false,
         }
     },
     
@@ -115,8 +117,9 @@ export default {
         this.role = localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
 
-        console.log("feedbbback",this.selected_survey)
+        console.log("seleced sue",this.selected_survey)
     },
+    
     methods: {
         giveFeedback(){
             console.log("ggoing to ffeedback",this.selected_survey)
@@ -140,7 +143,14 @@ export default {
             console.log(this.selected_survey.feedback)
         },        
         toggleSettings(){
-            document.getElementsByClassName(`survey-settings`)[0].classList.toggle("open-settings")
+            if(this.role == "faculty" && !this.settings_open){
+                axios.get(`http://www.localhost/surveyBackend/survey/analysis?facultyID=${this.user.facultyID}&surveyID=${this.selected_survey.surveyID}`).then(res=>{
+                    console.log("analusos",res);
+                    this.analysis = res.data;
+                    console.log(this.analysis);
+                })
+            };
+            this.settings_open = !this.settings_open;
         },
 
     },

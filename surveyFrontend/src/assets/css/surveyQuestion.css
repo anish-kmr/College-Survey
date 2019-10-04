@@ -201,3 +201,9 @@ input:focus{
 .hidden{
     display: none !important;
 }
+
+.analysis h2{
+    font-size: 1.8rem;
+    color: #707070;
+    margin-top: 4rem;
+}

@@ -13,8 +13,8 @@
                     </li>
                 </ul> -->
                 <ul >
-                    <li v-for="survey in surveys" @click="changeSelectedSurvey(survey)" :key="survey.surveyID">
-                        <router-link :to="'/'+role+'/survey/'+status+'/'+survey.surveyID"> 
+                    <li v-for="survey in surveys" @click="changeSelectedSurvey(survey)" :key="survey.sid">
+                        <router-link :to="'/'+role+'/survey/'+status+'/'+survey.sid"> 
                             <div class="survey-name">
                                 <h2>{{survey.name}}</h2>
                                 <p >{{survey.subjectName}}</p>
@@ -55,7 +55,7 @@ export default {
         changeSelectedSurvey(survey){
             this.selected_survey = survey;
             console.log("sssss",survey)
-            if (this.role != "student" && this.selected_survey.type == "faculty") this.getIncludedFaculties();
+            // if (this.role != "student" && this.selected_survey.type == "faculty") this.getIncludedFaculties();
             console.log(this.selected_survey);
             this.compKey=-this.compKey;
 
@@ -77,7 +77,7 @@ export default {
                     console.log("ss on parrrenttt",this.selected_survey)
 
                      console.log("selectted suvvey",this.selected_survey)
-                    if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
+                    if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].sid}`);
                 })
             }
             else{
@@ -89,6 +89,7 @@ export default {
                                     s.faculties_included = res.data; 
                                 });
                             }
+                            s.sid=s.surveyID;
                             this.surveys.push(s);
                         });
                         if(this.surveys[0]){
@@ -102,10 +103,7 @@ export default {
                                 axios.get(`http://www.localhost/surveyBackend/survey/faculties?surveyID=${s.surveyID}`).then(res=>{
                                     res.data.forEach(f=>{
                                        if(f.facultyID==this.user.facultyID){
-                                           axios.get(`http://www.localhost/surveyBackend/survey/analysis?facultyID=${f.facultyID}&surveyID=${s.surveyID}`).then(res=>{
-                                               console.log("analusos",res);
-                                               s.analysis = res.data;
-                                           })
+                                             s.sid=s.surveyID;
                                            this.surveys.push(s);
                                        };
                                     });
@@ -123,9 +121,6 @@ export default {
                 
             }
         },
-        getSurveyAnalysis(){
-            
-        }
 
         
     },
