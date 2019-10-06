@@ -52,6 +52,8 @@ export default {
     grid-template-columns: 20vw auto
 }
 .main-area{
-    height: 90h;
+    height: 90vh;
+    overflow-y: auto;
+    background-color: #d3e2fd !important;
 }
 </style>

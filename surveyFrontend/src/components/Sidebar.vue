@@ -14,13 +14,18 @@
                 <li @click="f">
                     <router-link :to="'/'+role+'/survey/active'">
                         <span class="nav-icon">
-                            <i class="fas fa-poll"></i>
+                            <i class="fas fa-list-alt"></i>
                         </span>
                         Active Surveys
                     </router-link>
                 </li>
-                <li >
-                    
+                <li v-if="role=='faculty'">
+                    <router-link :to="'/faculty/analysis'">
+                        <span class="nav-icon">
+                            <i class="fas fa-poll"></i>
+                        </span>
+                        Analysis
+                    </router-link>
                 </li>
                 
             </ul>

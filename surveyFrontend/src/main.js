@@ -8,6 +8,7 @@ import StudentLogin from './views/StudentLogin.vue'
 import AdminLogin from './views/AdminLogin.vue'
 import AdminDashboard from './views/AdminDashboard.vue'
 import FacultyDashboard from './views/FacultyDashboard.vue'
+import FacultyAnalysis from './views/FacultyAnalysis.vue'
 import StudentDashboard from './views/StudentDashboard.vue'
 import Surveys from './views/Surveys.vue'
 import SurveyDetails from './views/SurveyDetails.vue'
@@ -15,7 +16,9 @@ import CreateSurvey from './views/CreateSurvey.vue'
 import CreateSurveyDetails from './views/CreateSurveyDetails.vue'
 
 
+import HighchartsVue from "highcharts-vue";
 Vue.use(VueRouter)
+Vue.use(HighchartsVue)
 const router = new VueRouter({
   routes:[
     {
@@ -80,6 +83,10 @@ const router = new VueRouter({
         {
           path:'',
           redirect:'survey/active'
+        },
+        {
+          path:'analysis',
+          component:FacultyAnalysis,
         },
         {
           path:'survey/:status',
