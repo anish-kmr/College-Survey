@@ -34,6 +34,21 @@
                         <span class="response" v-if="selected_survey.feedback[i].response" >
                             <label class="option"><img :src="'/src/assets/emoticons/'+selected_survey.feedback[i].response+'.png'" alt=""></label>
                         </span>
+                        
+                        
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="qs-rating qs-statement">
+                        <div id="qs-r">
+                            <h2> How will you rate the Faculty?</h2>
+                        </div>
+                    </div>
+                     <div class="qs-options rate-stars" v-if="role=='student'">
+                        <span class="option star-option" v-for="s in stars" :key="s.rating" @click="rate(s.rating)" @mouseenter="hoveron" @mouseleave="hoveroff" :class="s.color">
+                            <i class="fas fa-star"></i>
+                        </span>
+                        
                     </div>
                 </div>
             </div>
@@ -109,6 +124,31 @@ export default {
             user:"",
             analysis:{},
             settings_open:false,
+            rated:0,
+            stars:[
+                {
+                    rating:5,
+                    color:"",
+                    
+                },
+                {
+                    rating:4,
+                    color:"",
+                },
+                {
+                    rating:3,
+                    color:"",
+                },
+                {
+                    rating:2,
+                    color:"",
+                },
+                {
+                    rating:1,
+                    color:"",
+                },
+            ],
+
         }
     },
     
@@ -128,8 +168,10 @@ export default {
                 facultyID:this.selected_survey.facultyID,
                 surveyID:this.selected_survey.surveyID,
                 studentID:this.user.studentID,
-                feedback:this.selected_survey.feedback
+                feedback:this.selected_survey.feedback,
+                rating:this.rated,
             }
+            console.log("ss",payload)
             axios.put("http://www.localhost/surveyBackend/feedback/create",payload).then(res=>{
                 console.log("rrres ",res.data);
                 if (res.data.success) {
@@ -152,6 +194,22 @@ export default {
             };
             this.settings_open = !this.settings_open;
         },
+        hoveron(){
+            this.stars.forEach(s => {
+                s.color="nostar"
+            });
+        },
+        hoveroff(){
+            this.rate(this.rated)
+        },
+        rate(rating){
+            this.rated = rating;
+            var color = ["very-bad","bad","average","good","very-good"]
+            this.stars.forEach(s => {
+                if(s.rating <= rating) s.color = color[rating-1];
+                else s.color="nostar"
+            });
+        }
 
     },
    

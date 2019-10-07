@@ -207,3 +207,35 @@ input:focus{
     color: #707070;
     margin-top: 4rem;
 }
+.rate-stars{
+    margin: 2rem 4rem;
+    position: relative;
+    width: max-content;
+}
+.star-option{
+    color: #acacac;
+    font-size: 4rem;
+    float: right;
+    margin: 0 1rem;
+    transition: .3s all;
+}
+.star-option:hover{cursor: pointer;}
+.nostar{color:#acacac;transition: 1.2s all;}
+.very-bad{color: #FF5254;transition: .9s all;}
+.bad{color: #FF6C35;transition: .7s all;}
+.average{color: #FF9900;transition: .5s all;}
+.good{color: #3F9E37;transition: .3s all;}
+.very-good{color: #10580a;transition: .1s all;}
+.star-option:nth-child(5):hover{color:#FF5254;transition: .1s all;}
+
+.star-option:nth-child(4):hover~.star-option{color:#FF6C35 ;transition: .3s all;}
+.star-option:nth-child(4):hover{color:#FF6C35 ;transition: .3s all;}
+
+.star-option:nth-child(3):hover~.star-option{color:#FF9900;transition: .5s all; }
+.star-option:nth-child(3):hover{color:#FF9900;transition: .5s all; }
+
+.star-option:nth-child(2):hover~.star-option{color:#3F9E37;transition: .7s all; }
+.star-option:nth-child(2):hover{color:#3F9E37;transition: .7s all; }
+
+.star-option:nth-child(1):hover~.star-option{color:#10580a;transition: .9s all; }
+.star-option:nth-child(1):hover{color:#10580a ;transition: .9s all;}

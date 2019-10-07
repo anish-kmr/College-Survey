@@ -8,6 +8,15 @@
                 </div>
             </router-link>
         </div>
+        <div  v-if="role=='faculty'">
+            <router-link to="/faculty/analysis">
+                <div class="rating"> 
+                    <span>4</span>
+                    <span class="star"><i class="fas fa-star"></i> </span>  
+                   
+                </div>
+            </router-link>
+        </div>
 
         <div class="nav">
             <ul>
