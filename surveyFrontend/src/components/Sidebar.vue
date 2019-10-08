@@ -9,13 +9,10 @@
             </router-link>
         </div>
         <div  v-if="role=='faculty'">
-            <router-link to="/faculty/analysis">
-                <div class="rating"> 
-                    <span>4</span>
-                    <span class="star"><i class="fas fa-star"></i> </span>  
-                   
-                </div>
-            </router-link>
+            <div class="rating"> 
+                <span class="rating-value" :class="starColor">{{rating}}</span>
+                <span class="star" :class="starColor"><i class="fas fa-star"></i> </span>  
+            </div>
         </div>
 
         <div class="nav">
@@ -43,16 +40,37 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
+            user:{},
             role:"",
+            starColor:"",
+            rating:0,
         }
     },
     beforeMount() {
-        this.role = localStorage.getItem("role")
+        this.role = localStorage.getItem("role");
+        this.user = JSON.parse(localStorage.getItem("user"));
+        if(this.role=="faculty"){
+            this.getRating();
+        }
+        
+
     },
     methods: {
+        getRating(){
+            axios.get(`http://www.localhost/surveyBackend/faculty/rating?facultyID=${this.user.facultyID}`).then(res=>{
+                this.rating = res.data.rating;
+                var r = this.rating;
+                if(r<1) this.starColor="very-bad";
+                else if(r<2) this.starColor="bad";
+                else if(r<3) this.starColor="average";
+                else if(r<4) this.starColor="good";
+                else if(r<5) this.starColor="very-good";
+            })
+        },
         f(){
             this.$parent.forceRender();
         }
@@ -117,5 +135,28 @@ export default {
     margin-right: 1rem;
     font-size: 3.5rem;
 }
+.rating{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    align-items: center;
+    text-align: center;padding:.5rem;
+}
+.rating-value{
+    font-size: 4.8rem;
+    font-weight: 700;
+    text-align: right;
+    color:#06227c;
+}
+.star{
+    margin-left: 2rem;
+    text-align: left;
+    font-size: 3.5rem;
+}
 
+.nostar{color:#acacac;}
+.very-bad{color: #FF5254;}
+.bad{color: #FF6C35;}
+.average{color: #FF9900;}
+.good{color: #3F9E37;}
+.very-good{color: #10580a;}
 </style>

@@ -91,6 +91,8 @@ export default {
                     this.question_wise.push(obj)
                     
                 }
+                console.log("data",this.question_wise);
+                
             })
         },
     },

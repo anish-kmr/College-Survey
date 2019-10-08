@@ -38,13 +38,13 @@
                         
                     </div>
                 </div>
-                <div class="question">
+                <div class="question" v-if="role=='student'">
                     <div class="qs-rating qs-statement">
                         <div id="qs-r">
                             <h2> How will you rate the Faculty?</h2>
                         </div>
                     </div>
-                     <div class="qs-options rate-stars" v-if="role=='student'">
+                     <div class="qs-options rate-stars" >
                         <span class="option star-option" v-for="s in stars" :key="s.rating" @click="rate(s.rating)" @mouseenter="hoveron" @mouseleave="hoveroff" :class="s.color">
                             <i class="fas fa-star"></i>
                         </span>
@@ -111,6 +111,35 @@
             </div>
         </div>
 
+
+
+        <div class="dialog-container hidden">
+            <div class="dialog-box">
+                <div class="dialog-header">
+                    <h2>{{message.title}}</h2>
+                    <div class="close" @click="closeDialog">
+                         <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="dialog-body">
+                    <div class="dialog-content">
+                        <div class="dialog-image">
+                            <img src="../assets/coins.png" alt="">
+                        </div>
+                        <div class="dialog-msg">
+                            <p>{{message.body}}</p>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="buttons" @click="closeDialog">
+                        <button> OK </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -125,6 +154,10 @@ export default {
             analysis:{},
             settings_open:false,
             rated:0,
+            message:{
+                title:"sample",
+                body:"sample text",
+            },
             stars:[
                 {
                     rating:5,
@@ -175,7 +208,9 @@ export default {
             axios.put("http://www.localhost/surveyBackend/feedback/create",payload).then(res=>{
                 console.log("rrres ",res.data);
                 if (res.data.success) {
-                    alert("successfully Subbmitted FFeedback")
+                    this.message.title="Coins Earned"
+                    this.message.body="Congratulations! You have earned 5 coins for answering the survey.Collect more for exciting gifts."
+                    this.openDialog();
                 }
                 else if(res.data.updated) alert("Changed Responses");
             })
@@ -209,6 +244,12 @@ export default {
                 if(s.rating <= rating) s.color = color[rating-1];
                 else s.color="nostar"
             });
+        },
+        closeDialog(){
+            document.getElementsByClassName("dialog-container")[0].classList.add("hidden");
+        },
+        openDialog(){
+            document.getElementsByClassName("dialog-container")[0].classList.remove("hidden");
         }
 
     },
@@ -233,5 +274,15 @@ export default {
         color: #8a8a8a;
         font-size: 1.8rem;
         text-transform: capitalize;
+    }
+    /* .dialog-body{
+        background-image: url('../assets/coinfall.png');
+        background-size: cover;
+        background-position-y: 50%;
+    } */
+    .dialog-content{
+        display:grid;
+        grid-template-columns: 30% auto;
+        
     }
 </style>

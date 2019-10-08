@@ -98,7 +98,7 @@ button:hover{
     background: rgba(0, 0, 0, 0.733);
 }
 .dialog-header{
-    height: 5rem;
+    height: 20%;
     padding:2rem 1rem;
     padding-bottom: 1.5rem;
     border-bottom:2px solid  #b8b8b8;
@@ -114,6 +114,7 @@ button:hover{
     right: 10px;
 }
 .dialog-body{
+    height: 80%;
     padding:2rem 4rem;
 }
 .dialog-msg p{
@@ -130,6 +131,14 @@ button:hover{
     padding:1rem;
     border-radius: 5px;
     border:1px solid rgb(51, 51, 51);
+}
+.dialog-image{
+    margin: 2rem auto;
+    text-align: center;
+}
+.dialog-image img{
+    width:100px;
+    height: 100px;
 }
 .dialog-body .buttons{
     text-align: right;

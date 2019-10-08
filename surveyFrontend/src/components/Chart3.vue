@@ -101,7 +101,7 @@ export default {
 <style scoped>
 .details{
     display: grid;
-    grid-template-columns: 50% auto;
+    grid-template-columns: 60% auto;
     align-items: center
 }
 .info{
