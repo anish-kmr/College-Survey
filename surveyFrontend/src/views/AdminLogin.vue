@@ -4,38 +4,7 @@
         <app-header></app-header>
         <div class="box flip-box">
             <div class="login-form" v-if="login_shown">
-                <div class="form-box">
-                    <!-- <h4 class="form-heading">Login To College Survey </h4> -->
-                     <div class="logo">
-                        <span>Log in To</span>
-                        <img src="../assets/logo.png" alt="">
-                        <h2>College Survey</h2>
-                        <h2 class="designation">ADMIN</h2>
-                    </div>
-                    <form >
-                        <div class="form-group">
-                            <label for="email">Email : </label>
-                            <input type="text" name="email" id="email" v-model="login.email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Password :  </label>
-                            <input type="password" name="password" id="password" v-model="login.password">
-                            <router-link to="/student/forgotpassword" class="sm-text" >
-                                Forgot Password?
-                            </router-link>
-                        </div>
-                        <div class="form-group">
-                            <div class="submit-btn">
-                                <button class="btn" @click="authenticate">Login</button>
-                            </div>
-
-                        </div>
-                    </form>
-                    <div class="signin" @click="toggleForm">
-                        Dont have an Account? Create One Now !
-                    </div>
-                </div>
+                <login :type="'admin'" :toggleForm="toggleForm"></login> 
             </div>
 
             <div class="signin-form" v-if="signin_shown">
@@ -113,6 +82,7 @@
 <script>
 
 import Header from '../components/Header.vue'
+import Login from '../components/Login.vue'
 import Footer from '../components/Footer.vue'
 import axios from 'axios';
 export default {
@@ -124,10 +94,7 @@ export default {
             email_valid:true,
             email_validated:false,
             email_taken:false,
-            login:{
-                email:"",
-                password:"",
-            },
+            
             signin:{
                 first_name:"",
                 last_name:"",
@@ -142,6 +109,7 @@ export default {
     components:{
         'app-header':Header,
         'app-footer':Footer,
+        'login':Login,
     },
     beforeCreate() {
         if(localStorage.getItem("role") == "admin"){
@@ -186,25 +154,7 @@ export default {
                 this.email_validated = false;
             }
         },
-        authenticate(ev){
-            ev.preventDefault();
-            let payload = {
-                email:this.login.email,
-                password:this.login.password,
-            }
-            console.log(payload);
-            axios.post("http://www.localhost/surveyBackend/admin/login",payload).then(res=>{
-                console.log("res aaya ",res);
-                if(res.data.authenticated) {
-                    localStorage.setItem("role","admin");
-                    localStorage.setItem("user",JSON.stringify(res.data.user));
-                    this.$router.push("/admin");
-                }
-                else{
-                    alert("DIDNTT SIggned in")
-                }
-            })
-        },
+        
         createAccount(ev){
             ev.preventDefault();
             let payload = {

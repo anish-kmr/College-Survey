@@ -69,12 +69,51 @@
     color: #4e4c4c;
     margin:1rem 0;
 }
+.form-group .input{
+    position: relative;
+    height: 4rem;
+}
+.input .icon{
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: absolute;
+    width:40px;
+    height: 100%;
+    background-color:#0d72a1;
+
+}
+.icon i{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size: 2rem;
+    color:white;
+}
 .form-group input{
+    height: 100%;
     width: 100%;
-    padding:1rem 1.4rem;
+    padding:1rem 50px;
     border-radius: 8px;
     border:1px solid #a3a2a2d2;
     margin-bottom: .8rem;
+    font-size: 1.6rem;
+}
+.show-password{
+    position: absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:40px;
+    z-index: 99;
+}
+.show-password i{
+    font-size: 2rem;
+    color: #707070;
+}
+.show-password i:hover{
+    cursor: pointer;
+    color: #3f3f3f;
 }
 .match{
     border:2px solid rgba(238, 49, 49, 0.548)!important;

@@ -21,8 +21,30 @@
 
         <div class="nav" v-if="logged_in">
             <ul>
-                <li>{{user.name}}</li>
-                <li @click="logout">Logout</li>
+                <li>
+                    <h4>{{user.name}}</h4>
+                </li>
+                <li>
+                    <div class="profile-icon" @click="toggleDrop">
+                        <img src="../assets/profile.jpg" alt="">
+                    </div>
+                    <div class="profile-dropdown" v-if="dropped">
+                        <ul>
+                            <li>
+                                <div class="drop-icon">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <h2>Settings</h2>
+                            </li>
+                            <li>
+                                <div class="drop-icon">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                </div>
+                                <h2 @click="logout">Logout</h2>
+                            </li >
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
        
@@ -49,6 +71,7 @@ export default {
                 department:"",
                 id:"",
             },
+            dropped:false,
         }
     },
     beforeMount() {
@@ -63,6 +86,9 @@ export default {
         logout(){
             localStorage.clear();
             this.$router.push("/")
+        },
+        toggleDrop(){
+            this.dropped=!this.dropped;
         }
     },
 }
@@ -103,20 +129,72 @@ export default {
 }
 
 .nav{
-    display: inline-block;
+    /* display: inline-block; */
     position: absolute;
     top:0;
     right: 0;
     height: 100%;
-    padding:2rem;
     font-size: 2rem;
     font-weight: bolder;
+    
 }
-.nav ul li{
-
+.nav>ul{
+    height: 100%;;
+}
+.nav>ul>li{
+    margin-right: 1.5rem;
+    height: 100%;
     display: inline-block;
 }
-.nav ul li:hover{
+.nav>ul>li>h4,.profile-icon{
+    position: relative;
+    top:50%;
+    transform:translateY(-50%);
+}
+.nav>ul li:hover{
     cursor: pointer;
+}
+
+.profile-icon img{
+    border:1px solid #707070;
+    vertical-align: top;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+}
+.profile-dropdown{
+    position: absolute;
+    top: 100%;
+    right:10px;
+    background-color: #707070;
+    min-width: 150px;
+    border-radius: 5px;
+    padding:.4rem; 
+}
+.profile-dropdown::before{
+    content:"";
+    position: absolute;
+    width:0px;
+    height:0px;
+    border:10px solid  transparent;
+    border-bottom: 12px solid #707070;
+    top:-20px;
+    right:17%;
+}
+.profile-dropdown ul li{
+    display: grid;
+    padding: .5rem;
+    grid-template-columns: 30px auto;
+    align-items: center;
+}
+.profile-dropdown .drop-icon{
+    
+    text-align: center;
+}
+.profile-dropdown h2{
+    padding-left: .8rem;
+    line-height: 2rem;
+    font-size: 1.2rem;
 }
 </style>

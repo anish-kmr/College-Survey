@@ -68,12 +68,12 @@
             </div>
             <div class="settings-body">
                 <div class="setting">
-                    <h2>Faculties included in this survey:</h2>
+                    <h2  v-if="selected_survey.faculties_included">Faculties included in this survey:</h2>
                     <div class="faculty-list">
                         <ul>
                             <li></li>
                             <template v-if="selected_survey.faculties_included">
-                                <li v-for="(faculty,i) in selected_survey.faculties_included" :key="i">
+                                <li v-for="(faculty,i) in selected_survey.faculties_included" :key="i" class="list">
                                     <div class="faculty-included">
                                         <div class="sno">{{i+1}}.</div>
                                         <div class="faculty-name">
@@ -88,7 +88,7 @@
                                 </li> 
                             </template>
                             <template v-if="analysis">
-                                <li >
+                                <li>
                                     <div class="analysis">
                                         <h2>
                                             {{analysis.total_feedbacks_given}} out of {{analysis.total_students}} Students

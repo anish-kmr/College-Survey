@@ -3,38 +3,7 @@
         <app-header></app-header>
         <div class="box flip-box faculty">
             <div class="login-form" v-if="login_shown">
-                <div class="form-box">
-                    <!-- <h4 class="form-heading">Login To College Survey </h4> -->
-                     <div class="logo">
-                        <span>Log in To</span>
-                        <img src="../assets/logo.png" alt="">
-                        <h2>College Survey</h2>
-                        <h2 class="designation">Faculty</h2>
-                    </div>
-                    <form >
-                        <div class="form-group">
-                            <label for="username">Email : </label>
-                            <input type="text" name="username" id="username" v-model="login.email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password">Password :  </label>
-                            <input type="password" name="password" id="password" v-model="login.password">
-                            <router-link to="/student/forgotpassword" class="sm-text">
-                                Forgot Password?
-                            </router-link>
-                        </div>
-                        <div class="form-group">
-                            <div class="submit-btn">
-                                <button class="btn" @click="authenticate">Login</button>
-                            </div>
-
-                        </div>
-                    </form>
-                    <div class="signin" @click="toggleForm">
-                        Dont have an Account? Create One Now !
-                    </div>
-                </div>
+                <login :type="'faculty'" :toggleForm="toggleForm"></login> 
             </div>
 
             <div class="signin-form" v-if="signin_shown">
@@ -161,6 +130,7 @@
 
 import Header from '../components/Header.vue'
 import Select from '../components/CustomSelect.vue'
+import Login from '../components/Login.vue'
 import Footer from '../components/Footer.vue'
 
 import axios from 'axios';
@@ -309,6 +279,7 @@ export default {
     components:{
         'app-header':Header,
         'custom-select':Select,
+        'login':Login,
         'app-footer':Footer,
     }
 }

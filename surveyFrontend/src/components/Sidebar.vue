@@ -9,9 +9,9 @@
             </router-link>
         </div>
         <div  v-if="role=='faculty'">
-            <div class="rating"> 
-                <span class="rating-value" :class="starColor">{{rating}}</span>
-                <span class="star" :class="starColor"><i class="fas fa-star"></i> </span>  
+            <div class="rating" :class="starColor"> 
+                <span class="rating-value">{{rating}}</span>
+                <span class="star" ><i class="fas fa-star"></i> </span>  
             </div>
         </div>
 
@@ -137,26 +137,31 @@ export default {
 }
 .rating{
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 70% 30%;
     align-items: center;
-    text-align: center;padding:.5rem;
+    padding:.25rem 1.25rem;
+    width: max-content;
+    margin: 0 auto;
 }
 .rating-value{
-    font-size: 4.8rem;
+    text-align: left;
+    font-size: 4.5rem;
+    letter-spacing: -2px;
     font-weight: 700;
-    text-align: right;
-    color:#06227c;
 }
 .star{
-    margin-left: 2rem;
+
     text-align: left;
     font-size: 3.5rem;
 }
+.rating-value,.star i{
+    color: white;
+}
 
-.nostar{color:#acacac;}
-.very-bad{color: #FF5254;}
-.bad{color: #FF6C35;}
-.average{color: #FF9900;}
-.good{color: #3F9E37;}
-.very-good{color: #10580a;}
+.nostar{background-color:#acacac;}
+.very-bad{background-color: #FF5254;}
+.bad{background-color: #FF6C35;}
+.average{background-color: #FF9900;}
+.good{background-color: #3F9E37;}
+.very-good{background-color: #10580a;}
 </style>
