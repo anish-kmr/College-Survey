@@ -22,6 +22,11 @@
         <div class="nav" v-if="logged_in">
             <ul>
                 <li>
+                    <div class="coins">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </li>
+                <li>
                     <h4>{{user.name}}</h4>
                 </li>
                 <li>
@@ -101,7 +106,8 @@ export default {
     left:0;
     top:0;
     transition: 1s all;
-    background: #2b9ed3;
+    /* background: #2b9ed3; */
+    background: #2b4fd3;
     min-height: 60px;
     height: 10vh;
     z-index: 999;
@@ -140,11 +146,13 @@ export default {
 }
 .nav>ul{
     height: 100%;;
+    display: grid;
+    grid-template-columns: repeat(4,max-content);
 }
 .nav>ul>li{
     margin-right: 1.5rem;
     height: 100%;
-    display: inline-block;
+    /* display: inline-block; */
 }
 .nav>ul>li>h4,.profile-icon{
     position: relative;
@@ -153,6 +161,7 @@ export default {
 }
 .nav>ul li:hover{
     cursor: pointer;
+    
 }
 
 .profile-icon img{
@@ -196,5 +205,14 @@ export default {
     padding-left: .8rem;
     line-height: 2rem;
     font-size: 1.2rem;
+}
+
+.coins{
+    height:100%;
+    padding: 2rem;
+}
+.coins i{
+    font-size: 2.4rem;
+    color: #2b4fd3;
 }
 </style>

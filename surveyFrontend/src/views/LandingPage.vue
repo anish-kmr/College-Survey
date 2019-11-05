@@ -168,7 +168,7 @@ export default {
 
 <style scoped>
 .trans-color{
-    background: #2b9ed33d !important;
+    background: #2b4fd300 !important;
 }
 .full-page{
     background-color: #f2f2f2;
@@ -178,9 +178,9 @@ export default {
 .banner{
     height:60vh;
     background: #2b9ed3;
-    background-image: url("../assets/banner1.jpg");
-    background-position: 70%;
-    filter:brightness(70%);
+    /* background-image: url("../assets/banner1.jpg"); */
+    background-image: url("../assets/bg.png");
+    background-position: 10%;
     background-size: cover;
     z-index: -1;;
 }
@@ -189,7 +189,7 @@ export default {
     font-size: 5rem;
     font-weight: normal;
     padding-top: 40vh;;
-    color:rgb(12, 12, 12);
+    color:rgb(255, 255, 255);
 }
 .section{
     margin:8rem auto;

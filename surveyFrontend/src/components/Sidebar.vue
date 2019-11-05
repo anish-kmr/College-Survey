@@ -87,7 +87,7 @@ export default {
     padding:1rem;
 }
 .create-survey{
-    background-color: #2b9ed3;
+    background-color: #2b4fd3;
     width: 80%;
     padding:10px 20px;
     font-size: 1.5rem;
@@ -97,11 +97,12 @@ export default {
     grid-template-columns: 50px auto;
     align-items: center;
     border-radius:8px;
-    box-shadow: 2px 2px 10px 2px #05628d;
+    /* box-shadow: 2px 2px 10px 2px #2b4fd3; */
+    transition: .3s all;
               
 }
 .create-survey:hover{
-    box-shadow: 2px 2px 10px 2px #1885b8;
+    box-shadow: 2px 2px 10px 2px #2b4fd3;
     cursor: pointer;
 }
 .create-survey .plus{
