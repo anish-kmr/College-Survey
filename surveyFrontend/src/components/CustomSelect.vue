@@ -139,7 +139,8 @@ export default {
     }
     .add-form input:nth-child(2){
         display: inline-block;
-        width:50px;
+        max-width:75px;
+        padding:1rem 2rem;
     }
     
 

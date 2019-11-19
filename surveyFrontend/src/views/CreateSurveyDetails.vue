@@ -142,7 +142,6 @@ export default {
             })
         },
         conductSurvey(){
-            alert("Survey Now LIve");
             var payload = {
                 name:this.survey_name,
                 type:this.active_template.type,
@@ -150,10 +149,12 @@ export default {
                 faculties:this.selected_faculties,
                 questions:this.active_template.questions
             }
+            console.log("paayload",payload)
             axios.put('http://www.localhost/surveyBackend/survey/create',payload).then(res=>{
                 console.log("survey res",res)
             })
             this.closeDialog();
+            alert("Survey Now LIve");
         },
         selectAll(){
             this.faculty_list.forEach(f => {

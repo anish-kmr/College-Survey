@@ -38,7 +38,7 @@
                         
                     </div>
                 </div>
-                <div class="question" v-if="role=='student'">
+                <div class="question" v-if="role=='student' && selected_survey.type=='faculty'">
                     <div class="qs-rating qs-statement">
                         <div id="qs-r">
                             <h2> How will you rate the Faculty?</h2>
@@ -87,7 +87,7 @@
                                     </div>
                                 </li> 
                             </template>
-                            <template v-if="analysis">
+                            <template v-if="analysis && role!='student'">
                                 <li>
                                     <div class="analysis">
                                         <h2>
@@ -220,7 +220,11 @@ export default {
             console.log(this.selected_survey.feedback)
         },        
         toggleSettings(){
-            if(this.role == "faculty" && !this.settings_open){
+            console.log("sel sur",this.selected_survey)
+            console.log("open",this.role)
+            if( (this.role == "faculty" || this.role=="admin") && !this.settings_open){
+                console.log("aaya");
+                
                 axios.get(`http://www.localhost/surveyBackend/survey/analysis?facultyID=${this.user.facultyID}&surveyID=${this.selected_survey.surveyID}`).then(res=>{
                     console.log("analusos",res);
                     this.analysis = res.data;

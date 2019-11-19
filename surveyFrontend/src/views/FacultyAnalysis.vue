@@ -64,21 +64,23 @@ export default {
 
             axios.get(`http://localhost/surveyBackend/survey/faculty/analysis?facultyID=${this.user.facultyID}&surveyID=5000`).then(res=>{
                 this.analysis = res.data;
-                console.log("analysis",this.analysis.questions);
+
+                console.log("res analysis",this.analysis);
                 this.analysis.avg_response.forEach(a => {
                     this.avg_response.statements.push(a.statement);
                     this.avg_response.data.push(parseFloat(a.average));
                 });
                 for (const qsID in this.analysis.questions) {
-                    // console.log("qsid",qsID)
+                    console.log("qsid",qsID)
                     // console.log("details",this.analysis.questions[qsID])
                     var q = this.analysis.questions[qsID]
-                    var percentage_response = [];
+                    console.log("q ",q)
+                    var percentage_response = [0,0,0,0,0];
                     var count = [];
                     q.analysis.forEach(e => {
                         var p = (parseInt(e.count)/parseInt(q.total_responses))*100;
-                        percentage_response.push(p);
-                        count.push(e.count);
+                        percentage_response[parseInt(e.response)-1]=p
+                        count.push[parseInt(e.response)-1]=parseInt(e.count);
                     });
 
                     // console.log("per",percentage_response)
@@ -91,8 +93,9 @@ export default {
                     this.question_wise.push(obj)
                     
                 }
-                console.log("data",this.question_wise);
-                
+                console.log("qswise",this.question_wise);
+                console.log("analysis",this.analysis);
+                console.log("avg",this.avg_response);
             })
         },
     },

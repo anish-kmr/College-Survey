@@ -20,7 +20,7 @@
                         <div class="form-group multi-group">
                             <div class="form-group-half">
                                 <label for="firstname">First Name :</label>
-                                <input type="text" id="firstname" v-model="signin.first_name">
+                                <input type="text" id="firstname" v-model="signin.first_name" required>
                             </div>
                             <div class="form-group-half">
                                 <label for="lastname">Last Name :</label>
@@ -165,18 +165,38 @@ export default {
                 password:this.signin.password,
             }
             console.log(payload);
-            axios.put("http://www.localhost/surveyBackend/admin/signin",payload).then(res=>{
-                console.log("res of put  ",res);
-                if(res.data.created) {
-                    localStorage.setItem("role","admin");
-                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
-                    localStorage.setItem("user",JSON.stringify(this.signin));
-                    this.$router.push("/admin");
+            var ok=true;
+            for(const field in payload){
+                console.log("f",payload[field])
+                if(payload[field].trim() == ""){
+                    ok=false;
+                    alert("All Fields are required");
+                    break;
                 }
-                else{
-                    alert("DIDNTT SIggned in")
-                }
-            })
+            }
+            if(ok && !this.email_validated){
+                alert("Email must be valid");
+                ok=false
+            }
+            if(ok && this.signin.password!=this.signin.cnfpassword){
+                alert("Password do not match")
+                ok=false
+            }
+            if(ok){
+                 axios.put("http://www.localhost/surveyBackend/admin/signin",payload).then(res=>{
+                    console.log("res of put  ",res);
+                    if(res.data.created) {
+                        var user=res.data.user
+                        localStorage.setItem("role","admin");
+                        localStorage.setItem("user",JSON.stringify(user));
+                        this.$router.push("/admin");
+                    }
+                    else{
+                        alert("DIDNTT SIggned in")
+                    }
+                })
+            }
+           
         }
     },  
 }

@@ -21,6 +21,20 @@
                             </div>
                         </router-link>
                     </li>
+                    <!-- <li v-for="survey in surveys.mess" @click="changeSelectedSurvey(survey)" :key="survey.sid">
+                        <router-link :to="'/'+role+'/survey/'+status+'/'+survey.surveyID"> 
+                            <div class="survey-name">
+                                <h2>{{survey.name}}</h2>
+                            </div>
+                        </router-link>
+                    </li>
+                    <li v-for="survey in surveys.hostel" @click="changeSelectedSurvey(survey)" :key="survey.sid">
+                        <router-link :to="'/'+role+'/survey/'+status+'/'+survey.surveyID"> 
+                            <div class="survey-name">
+                                <h2>{{survey.name}}</h2>
+                            </div>
+                        </router-link>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -48,7 +62,7 @@ export default {
     beforeMount() {
         this.role=localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
-
+ 
         this.getSurveys();
     },
     methods: {
@@ -66,15 +80,18 @@ export default {
                     console.log("aa ya ",res);
                     this.student_surveys = res.data;
 
+                    // this.surveys["faculty"]=res.data['faculty']
+                    // this.surveys["mess"]=res.data['mess']
+                    // this.surveys["hostel"]=res.data['hostel']
                     this.surveys=this.surveys.concat(res.data['faculty']);
                     this.surveys=this.surveys.concat(res.data['mess']);
                     this.surveys=this.surveys.concat(res.data['hostel']);
                     
 
                     this.selected_survey=this.surveys[0];
-                    console.log("selectd",this.selected_survey)
+                    console.log("surveys",this.surveys)
                     // this.selected_survey.feedback = Array(this.selected_survey.questions.length).fill(0);
-                    console.log("ss on parrrenttt",this.selected_survey)
+                    // console.log("ss on parrrenttt",this.selected_survey)
 
                      console.log("selectted suvvey",this.selected_survey)
                     if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].sid}`);
@@ -82,6 +99,8 @@ export default {
             }
             else{
                 axios.get('http://www.localhost/surveyBackend/surveys?status=active').then(res=>{
+                    console.log("res " , res);
+                    
                     if(this.role == "admin"){
                         res.data.forEach(s => {
                             if(s.type == "faculty"){
@@ -96,6 +115,8 @@ export default {
                             this.selected_survey=this.surveys[0];
                             if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
                         }   
+                        console.log("surveys",this.surveys);
+                        
                     }
                     else if(this.role=="faculty"){
                         res.data.forEach(s => {

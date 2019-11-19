@@ -194,9 +194,36 @@ export default {
         toggleSubjectDetails(ev){
 
             ev.preventDefault();
-            this.subjects_shown=!this.subjects_shown;
-            this.signin_shown=!this.signin_shown;
-            console.log("signin",this.signin)
+            let payload = {
+               first_name:this.signin.first_name,
+               last_name:this.signin.last_name,
+               email:this.signin.email,
+               department:this.signin.department,
+               password:this.signin.password,
+           }
+            var ok=true;
+            for(const field in payload){
+                console.log("f",payload[field])
+                if(payload[field].trim() == ""){
+                    ok=false;
+                    alert("All Fields are required");
+                    break;
+                }
+            }
+            if(ok && !this.email_validated){
+                alert("Email must be valid");
+                ok=false
+            }
+            if(ok && this.signin.password!=this.signin.cnfpassword){
+                alert("Password do not match")
+                ok=false
+            }
+            if(ok){
+                this.subjects_shown=!this.subjects_shown;
+                this.signin_shown=!this.signin_shown;
+                console.log("signin",this.signin)
+            }
+            
         },
         validatePassword(){
             console.log(this.password)
@@ -233,6 +260,7 @@ export default {
         },
         authenticate(ev){
             ev.preventDefault();
+
             let payload = {
                 email:this.login.email,
                 password:this.login.password,
@@ -262,18 +290,21 @@ export default {
                password:this.signin.password,
            }
            console.log(payload);
-           axios.put("http://www.localhost/surveyBackend/faculty/signin",payload).then(res=>{
-               console.log("res of put  ",res);
-               if(res.data.created) {
-                    localStorage.setItem("role","faculty");
-                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
-                    localStorage.setItem("user",JSON.stringify(this.signin));
-                    this.$router.push("/faculty");
-                }
-                else{
-                    alert("DIDNTT SIggned in")
-                }
-           })
+           var ok = true
+            if(ok){
+                axios.put("http://www.localhost/surveyBackend/faculty/signin",payload).then(res=>{
+                    console.log("res of put  ",res);
+                    if(res.data.created) {
+                            var user=res.data.user;
+                            localStorage.setItem("role","faculty");
+                            localStorage.setItem("user",JSON.stringify(user));
+                            this.$router.push("/faculty");
+                        }
+                        else{
+                            alert("DIDNTT SIggned in")
+                        }
+                })
+            }
         }
     },
     components:{

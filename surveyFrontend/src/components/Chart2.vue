@@ -24,6 +24,8 @@ export default {
                 },
                 xAxis:{
                     categories:["😖", "😣", "😐", "😊", "😁"],    
+                    min:0,
+                    max:4,
                     labels: {
                       useHTML: true,
                       tickPixelInterval:0,

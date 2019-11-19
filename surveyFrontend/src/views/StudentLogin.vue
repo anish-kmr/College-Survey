@@ -227,18 +227,38 @@ export default {
                 password:this.signin.password,
             }
             console.log(payload);
-            axios.put("http://www.localhost/surveyBackend/student/signin",payload).then(res=>{
-                console.log("res of put  ",res);
-                if(res.data.created) {
-                    localStorage.setItem("role","student");
-                    this.signin.name = this.signin.first_name+" "+this.signin.last_name;
-                    localStorage.setItem("user",JSON.stringify(this.signin));
-                    this.$router.push("/student");
+
+            var ok=true;
+            for(const field in payload){
+                console.log("f",payload[field])
+                if(payload[field].trim() == ""){
+                    ok=false;
+                    alert("All Fields are required");
+                    break;
                 }
-                else{
-                    alert("DIDNTT SIggned in")
-                }
-            })
+            }
+            if(ok && !this.email_validated){
+                alert("Email must be valid");
+                ok=false
+            }
+            if(ok && this.signin.password!=this.signin.cnfpassword){
+                alert("Password do not match")
+                ok=false
+            }
+            if(ok){
+                axios.put("http://www.localhost/surveyBackend/student/signin",payload).then(res=>{
+                    console.log("res of put  ",res);
+                    if(res.data.created) {
+                        var user=res.data.user;
+                        localStorage.setItem("role","student");
+                        localStorage.setItem("user",JSON.stringify(user));
+                        this.$router.push("/student");
+                    }
+                    else{
+                        alert("DIDNTT SIggned in")
+                    }
+                })
+            }
         }
     },
     components:{

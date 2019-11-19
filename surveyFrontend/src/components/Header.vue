@@ -21,7 +21,7 @@
 
         <div class="nav" v-if="logged_in">
             <ul>
-                <li>
+                <li v-if="role=='student'">
                     <div class="coins">
                         <i class="fas fa-coins"></i>
                     </div>
@@ -198,13 +198,14 @@ export default {
     align-items: center;
 }
 .profile-dropdown .drop-icon{
-    
+    color:#f5f5f5;
     text-align: center;
 }
 .profile-dropdown h2{
     padding-left: .8rem;
     line-height: 2rem;
     font-size: 1.2rem;
+    color:#f5f5f5;
 }
 
 .coins{
