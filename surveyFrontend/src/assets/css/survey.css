@@ -9,7 +9,7 @@
 }
 .side-list-header{
     padding:2rem 1rem;
-    height: 7.5rem;
+    /* height: 7.5rem; */
     /* border-bottom: 2px solid #b4b4b4; */
 }
 .side-list-header h2{
@@ -55,3 +55,22 @@
 .side-list{
     background-color: white;
 }
+.select_fac_survey{padding:.5rem}
+.select_fac_survey select{
+    width: 100%;
+    padding:1rem .5rem;
+    font-size: 1.6rem;
+    color:#3d3d3d;
+    font-weight: bolder;
+    background:none;
+}
+.select_fac_survey select:focus{outline: none;}
+.list-section-name{
+    font-size: 1.4rem;
+    font-style: italic;
+    border-bottom: none;
+    font-weight: bold;
+    margin: .5rem .75rem;
+    padding-top: 1.5rem;
+}
+

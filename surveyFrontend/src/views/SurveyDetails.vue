@@ -190,7 +190,7 @@ export default {
         this.role = localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
 
-        console.log("seleced sue",this.selected_survey)
+        console.log("sdasdasda sue",this.selected_survey)
     },
     
     methods: {
