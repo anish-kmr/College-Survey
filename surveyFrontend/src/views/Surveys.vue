@@ -98,7 +98,6 @@ export default {
     beforeMount() {
         this.role=localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
- 
         this.getSurveys();
     },
     methods: {
@@ -111,16 +110,60 @@ export default {
         
         changeSelectedSurvey(survey){
             this.selected_survey = survey;
-            console.log("sssss",survey)
             // if (this.role != "student" && this.selected_survey.type == "faculty") this.getIncludedFaculties();
-            console.log(this.selected_survey);
+           
             this.compKey=-this.compKey;
 
         },
+        findSurveyFromURL(id){
+            var found=false;
+            var od = parseInt(id.toString()[0])
+            console.log("od",od)
+            if(this.role=="student"){
+                console.log("arr",this.surveys['mess'])
+                if(od==3){//search in faculties 
+                    this.surveys['faculty'][this.selected_fac_survey].forEach(s => {
+                        if(s.facultyID == id){
+                            this.selected_survey = s;
+                            found=true;
+                            return true;
+                        }
+                    });
+                }
+                else if(od==5){//mess or hostel surveys
+                    this.surveys['mess'].forEach(s => {
+                        if(s.surveyID == id){
+                            this.selected_survey = s;
+                            found=true;
+                            return true;
+                        }
+                    });
+                    this.surveys['hostel'].forEach(s => {
+                        if(s.surveyID == id){
+                            this.selected_survey = s;
+                            found=true;
+                            return true;
+                        }
+                    });
+                }
+
+            }
+            else{
+                this.surveys.forEach(s => {
+                    console.log("id",s.surveyID)
+                    if(s.surveyID==id){
+                        console.log("found",s)
+                        this.selected_survey=s;
+                        found=true;
+                    }
+                });
+            }
+            return found;
+        },
         getSurveys(){
             if(this.role == "student"){
-                axios.get(`http://www.localhost/surveyBackend/student/surveys?sid=${this.user.studentID}`).then(res=>{
-                    console.log("aa ya ",res);
+                axios.get(`http://www.localhost/surveyBackend/student/surveys?sid=${this.user.studentID}&status=${this.status}`).then(res=>{
+                    console.log("aa ya ",res.data);
                     this.student_surveys = res.data;
                     this.isSelect=Object.keys(res.data['faculty']).length
                     this.surveys["faculty"]=res.data['faculty']
@@ -135,18 +178,14 @@ export default {
                     this.selected_survey=this.surveys['faculty'][last_survey][0]
                    
                     
-                    
-
-
-                    console.log("sel_fac_sur",this.selected_fac_survey)
-                    console.log("len",this.isSelect)
-                    console.log("surveys",this.surveys)
+        
                     // this.selected_survey.feedback = Array(this.selected_survey.questions.length).fill(0);
-                    // console.log("ss on parrrenttt",this.selected_survey)
-
-                     console.log("selectted suvvey",this.selected_survey)
-                     console.log("sid",this.surveys['faculty'][last_survey][0].sid)
+                    console.log("sel sur",this.selected_survey)
                     if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys['faculty'][last_survey][0].sid}`);
+                    else{
+                        var found= this.findSurveyFromURL(this.id);
+                        if(!found) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys['faculty'][last_survey][0].sid}`);
+                    }
                     // else{
                     //     var selected=false
                     //     if(!selected){
@@ -182,8 +221,8 @@ export default {
                 })
             }
             else{
-                axios.get('http://www.localhost/surveyBackend/surveys?status=active').then(res=>{
-                    console.log("res " , res);
+                axios.get(`http://www.localhost/surveyBackend/surveys?status=${this.status}`).then(res=>{
+                   
                     
                     if(this.role == "admin"){
                         res.data.forEach(s => {
@@ -198,8 +237,13 @@ export default {
                         if(this.surveys[0]){
                             this.selected_survey=this.surveys[0];
                             if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
+                            else{
+                                var found= this.findSurveyFromURL(this.id);
+                                console.log("value of found var",found)
+                                if(!found) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
+                            }
                         }   
-                        console.log("surveys",this.surveys);
+                        console.log("surveys",this.surveys)
                         
                     }
                     else if(this.role=="faculty"){
@@ -215,12 +259,18 @@ export default {
 
                                     if(this.surveys[0]){
                                         this.selected_survey=this.surveys[0];
-                                         if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
+                                        if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
+                                        else{
+                                            var found= this.findSurveyFromURL(this.id);
+                                            if(!found) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys['faculty'][last_survey][0].sid}`);
+                                        }
                                     }
                                     
                                 })
                             }; 
                         })
+
+                        console.log("surveys",this.surveys)
                     }
                 })
                 

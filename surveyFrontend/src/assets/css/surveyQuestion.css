@@ -94,7 +94,7 @@
     padding:0 1.5rem;
     border-left:2px solid #bdbdbd; 
 }
-.give-feedback{
+.give-feedback,.close-survey{
     /* padding: 1rem 5rem;
     text-align: right; */
     position: absolute;

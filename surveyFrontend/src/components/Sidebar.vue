@@ -17,7 +17,7 @@
 
         <div class="nav">
             <ul>
-                <li @click="f">
+                <li @click="forceRender">
                     <router-link :to="'/'+role+'/survey/active'">
                         <span class="nav-icon">
                             <i class="fas fa-list-alt"></i>
@@ -25,6 +25,16 @@
                         Active Surveys
                     </router-link>
                 </li>
+                <li @click="forceRender">
+                    <router-link :to="'/'+role+'/survey/closed'">
+                        <span class="nav-icon">
+                            <i class="fas fa-history "></i>
+                        </span>
+                        Closed Surveys
+                    </router-link>
+                </li>
+                
+                
                 <li v-if="role=='faculty'">
                     <router-link :to="'/faculty/analysis'">
                         <span class="nav-icon">
@@ -71,7 +81,7 @@ export default {
                 else if(r<5) this.starColor="very-good";
             })
         },
-        f(){
+        forceRender(){
             this.$parent.forceRender();
         }
     },
@@ -127,10 +137,13 @@ export default {
     font-size: 1.8rem;
     font-weight: bold;
     color:#1447b6 ;
+    transition: .2s all;
 }
 .nav li a:hover,
-.router-link-exact-active{
-    color: #06227c !important;
+.router-link-exact-active,
+.router-link-active{
+    color: #061c64 !important;
+    font-size: 1.9rem;
 }
 .nav-icon{
     margin-right: 1rem;

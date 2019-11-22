@@ -53,9 +53,15 @@
                 </div>
             </div>
 
-            <div class="give-feedback" v-if="role=='student'">
+            <div class="give-feedback" v-if="role=='student' && selected_survey.status=='active'">
                 <button @click="giveFeedback">Give Feedack </button>
             </div>
+            <div class="close-survey" v-if="role=='admin' && selected_survey.status=='active'">
+                <button @click="closeSurvey">Close Survey </button>
+            </div>
+
+            
+
         </div>
 
 
@@ -190,19 +196,41 @@ export default {
         this.role = localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
 
-        console.log("sdasdasda sue",this.selected_survey)
     },
     
     methods: {
+        closeSurvey(){
+            console.log("close ",this.selected_survey);
+            var payload = {
+                surveyID:this.selected_survey.surveyID
+            }
+            axios.post("http://www.localhost/surveyBackend/survey/close",payload).then(res=>{
+                console.log(res);
+            })
+
+        },
         giveFeedback(){
             console.log("ggoing to ffeedback",this.selected_survey)
-            var payload = {
-                adminID:this.selected_survey.adminID,
-                facultyID:this.selected_survey.facultyID,
-                surveyID:this.selected_survey.surveyID,
-                studentID:this.user.studentID,
-                feedback:this.selected_survey.feedback,
-                rating:this.rated,
+            if(this.selected_survey.type=="faculty"){
+                var payload = {
+                    adminID:this.selected_survey.adminID,
+                    facultyID:this.selected_survey.facultyID,
+                    surveyID:this.selected_survey.surveyID,
+                    studentID:this.user.studentID,
+                    feedback:this.selected_survey.feedback,
+                    rating:this.rated,
+                }
+            }
+            else{
+                console.log("elsed")
+                var payload = {
+                    adminID:this.selected_survey.adminID,
+                    facultyID:0,
+                    surveyID:this.selected_survey.surveyID,
+                    studentID:this.user.studentID,
+                    feedback:this.selected_survey.feedback,
+                    rating:-1,
+                }
             }
             console.log("ss",payload)
             axios.put("http://www.localhost/surveyBackend/feedback/create",payload).then(res=>{
@@ -217,7 +245,9 @@ export default {
         },
         answer(i,response){
             this.selected_survey.feedback[i].response = response;
-            console.log(this.selected_survey.feedback)
+            console.log(this.selected_survey)
+            
+            
         },        
         toggleSettings(){
             console.log("sel sur",this.selected_survey)
