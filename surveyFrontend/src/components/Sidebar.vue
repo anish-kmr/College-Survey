@@ -43,6 +43,30 @@
                         Analysis
                     </router-link>
                 </li>
+                <li v-if="role=='student'" @click="forceRender">
+                    <router-link :to="'/student/review/new'">
+                        <span class="nav-icon">
+                            <i class="fas fa-poll"></i>
+                        </span>
+                        Review Faculty
+                    </router-link>
+                </li>
+                <li v-if="role=='student'" @click="forceRender">
+                    <router-link :to="'/student/review/past'">
+                        <span class="nav-icon">
+                            <i class="fas fa-poll"></i>
+                        </span>
+                        Past Reviews
+                    </router-link>
+                </li>
+                <li v-if="role=='faculty'" @click="forceRender">
+                    <router-link :to="'/faculty/reviews'">
+                        <span class="nav-icon">
+                            <i class="fas fa-poll"></i>
+                        </span>
+                        Reviews
+                    </router-link>
+                </li>
                 
             </ul>
         </div>

@@ -1,7 +1,8 @@
 <template>
     <div>
         <div class="details-header">
-            <h2>{{active_template.type}} Survey</h2><span>-Template</span>
+            <h2>{{active_template.type}} Survey</h2>
+            <span>-Template</span>
             <div class="controls">
                 <div class="settings-icon" @click="toggleSettings">
                     <i class="fas fa-cog"></i>

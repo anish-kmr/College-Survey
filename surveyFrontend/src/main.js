@@ -15,6 +15,9 @@ import SurveyDetails from './views/SurveyDetails.vue'
 import CreateSurvey from './views/CreateSurvey.vue'
 import CreateSurveyDetails from './views/CreateSurveyDetails.vue'
 
+import Review from './views/Review.vue'
+import ReviewDetails from './views/ReviewDetails.vue'
+
 
 import HighchartsVue from "highcharts-vue";
 Vue.use(VueRouter)
@@ -100,6 +103,18 @@ const router = new VueRouter({
             }
           ]
         },
+        {
+          path:'reviews',
+          props:true,
+          component:Review,
+          children:[
+            {
+              path:':id',
+              component:ReviewDetails,
+              props:true,
+            }
+          ]
+        }
       ]
     },
     {
@@ -122,6 +137,19 @@ const router = new VueRouter({
             }
           ]
         },
+        {
+          path:'review/:type',
+          props:true,
+          component:Review, 
+          children:[
+            {
+              path:':id',
+              component:ReviewDetails,
+              props:true,
+            }
+          ]
+        },
+        
       ]
     }
   ],
