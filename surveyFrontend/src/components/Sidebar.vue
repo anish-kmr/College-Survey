@@ -46,7 +46,7 @@
                 <li v-if="role=='student'" @click="forceRender">
                     <router-link :to="'/student/review/new'">
                         <span class="nav-icon">
-                            <i class="fas fa-poll"></i>
+                            <i class="fas fa-comment-dots"></i>
                         </span>
                         Review Faculty
                     </router-link>
@@ -54,7 +54,7 @@
                 <li v-if="role=='student'" @click="forceRender">
                     <router-link :to="'/student/review/past'">
                         <span class="nav-icon">
-                            <i class="fas fa-poll"></i>
+                            <i class="fas fa-envelope"></i>
                         </span>
                         Past Reviews
                     </router-link>

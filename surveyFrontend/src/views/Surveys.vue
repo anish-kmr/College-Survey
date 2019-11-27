@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="survey-details">
-            <router-view :selected_survey="selected_survey" :compKey="compKey"></router-view>
+            <router-view :selected_survey="selected_survey" :compKey="compKey" ref="child"></router-view>
         </div>
     </div>
 </template>
@@ -104,12 +104,13 @@ export default {
         facSurvey(){
             this.changeSelectedSurvey(this.surveys.faculty[this.selected_fac_survey][0])
             this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys['faculty'][this.selected_fac_survey][0].sid}`);
-            
-            
         },
         
         changeSelectedSurvey(survey){
             this.selected_survey = survey;
+            if(this.role=="student" && parseInt(this.id.toString()[0])==3){
+                this.$refs.child.rate(this.selected_survey.rating);
+            }
             // if (this.role != "student" && this.selected_survey.type == "faculty") this.getIncludedFaculties();
            
             this.compKey=-this.compKey;
@@ -124,7 +125,7 @@ export default {
                 if(od==3){//search in faculties 
                     this.surveys['faculty'][this.selected_fac_survey].forEach(s => {
                         if(s.facultyID == id){
-                            this.selected_survey = s;
+                            this.changeSelectedSurvey(s);
                             found=true;
                             return true;
                         }
@@ -133,14 +134,14 @@ export default {
                 else if(od==5){//mess or hostel surveys
                     this.surveys['mess'].forEach(s => {
                         if(s.surveyID == id){
-                            this.selected_survey = s;
+                            this.changeSelectedSurvey(s);
                             found=true;
                             return true;
                         }
                     });
                     this.surveys['hostel'].forEach(s => {
                         if(s.surveyID == id){
-                            this.selected_survey = s;
+                            this.changeSelectedSurvey(s);
                             found=true;
                             return true;
                         }
@@ -153,7 +154,7 @@ export default {
                     console.log("id",s.surveyID)
                     if(s.surveyID==id){
                         console.log("found",s)
-                        this.selected_survey=s;
+                        this.changeSelectedSurvey(s);
                         found=true;
                     }
                 });
@@ -175,7 +176,7 @@ export default {
                     // this.surveys=this.surveys.concat(res.data['mess']);
                     // this.surveys=this.surveys.concat(res.data['hostel']);
                     
-                    this.selected_survey=this.surveys['faculty'][last_survey][0]
+                    this.changeSelectedSurvey(this.surveys['faculty'][last_survey][0]);
                    
                     
         
@@ -235,7 +236,7 @@ export default {
                             this.surveys.push(s);
                         });
                         if(this.surveys[0]){
-                            this.selected_survey=this.surveys[0];
+                            this.changeSelectedSurvey(this.surveys[0]);
                             if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
                             else{
                                 var found= this.findSurveyFromURL(this.id);
@@ -258,7 +259,7 @@ export default {
                                     });
 
                                     if(this.surveys[0]){
-                                        this.selected_survey=this.surveys[0];
+                                        this.changeSelectedSurvey(this.surveys[0]);
                                         if(!this.id) this.$router.push(`/${this.role}/survey/${this.status}/${this.surveys[0].surveyID}`);
                                         else{
                                             var found= this.findSurveyFromURL(this.id);

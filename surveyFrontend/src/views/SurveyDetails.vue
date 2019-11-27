@@ -78,22 +78,7 @@
                     <div class="faculty-list">
                         <ul>
                             <li></li>
-                            <template v-if="selected_survey.faculties_included">
-                                <li v-for="(faculty,i) in selected_survey.faculties_included" :key="i" class="list">
-                                    <div class="faculty-included">
-                                        <div class="sno">{{i+1}}.</div>
-                                        <div class="faculty-name">
-                                            <h2>{{faculty.name}}</h2>
-                                        </div>
-                                        <div class="faculty-dept">
-                                            <h4>{{faculty.department}}</h4>
-                                        </div>
-
-
-                                    </div>
-                                </li> 
-                            </template>
-                            <template v-if="analysis && role!='student'">
+                            <template v-if="analysis && role=='faculty'">
                                 <li>
                                     <div class="analysis">
                                         <h2>
@@ -102,6 +87,22 @@
                                         </h2>
                                     </div>
                                 </li> 
+                            </template>
+                            <template v-else-if="analysis && role=='admin'"> 
+                                <ul class="admin-analysis">
+                                    <li v-for="(faculty,name,i) in analysis" :key="faculty.facultyID">
+                                        <label class="check-label" :for="'id-'+faculty.facultyID">
+                                            <div class="sno">{{i+1}}.</div>
+                                            <div class="faculty-name">
+                                                <h2>{{name}}</h2>
+                                                <h4>{{faculty.department}}</h4>
+                                            </div>
+                                            <div class="checkbox-container" >
+                                               <h2 class=""> {{faculty.total_feedbacks_given}}/{{faculty.total_students}} </h2>
+                                            </div>
+                                        </label>
+                                    </li>
+                                </ul>
                             </template>
                             <template  v-else>
                                 <li>
@@ -252,7 +253,7 @@ export default {
         toggleSettings(){
             console.log("sel sur",this.selected_survey)
             console.log("open",this.role)
-            if( (this.role == "faculty" || this.role=="admin") && !this.settings_open){
+            if( this.role == "faculty" && !this.settings_open){
                 console.log("aaya");
                 
                 axios.get(`http://www.localhost/surveyBackend/survey/analysis?facultyID=${this.user.facultyID}&surveyID=${this.selected_survey.surveyID}`).then(res=>{
@@ -260,7 +261,16 @@ export default {
                     this.analysis = res.data;
                     console.log(this.analysis);
                 })
-            };
+            }
+            else if(this.role=="admin" && !this.settings_open ){
+                console.log("aaya");
+                
+                axios.get(`http://www.localhost/surveyBackend/survey/admin/analysis?surveyID=${this.selected_survey.surveyID}`).then(res=>{
+                    console.log("analusos",res);
+                    this.analysis = res.data;
+                    console.log(this.analysis);
+                })
+            }
             this.settings_open = !this.settings_open;
         },
         hoveron(){
@@ -272,6 +282,7 @@ export default {
             this.rate(this.rated)
         },
         rate(rating){
+            console.log("rated ",rating)
             this.rated = rating;
             var color = ["very-bad","bad","average","good","very-good"]
             this.stars.forEach(s => {
@@ -317,6 +328,8 @@ export default {
     .dialog-content{
         display:grid;
         grid-template-columns: 30% auto;
-        
+    }
+    .ratio{
+        outline: 2px solid red;
     }
 </style>
