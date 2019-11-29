@@ -101,6 +101,17 @@
                                                <h2 class=""> {{faculty.total_feedbacks_given}}/{{faculty.total_students}} </h2>
                                             </div>
                                         </label>
+                                    <li >
+                                        <label class="check-label">
+                                            <div class="sno"></div>
+                                            <div class="faculty-name total-feedbacks">
+                                                <h2>Total </h2>
+                                                <h4></h4>
+                                            </div>
+                                            <div class="checkbox-container total-feedbacks" >
+                                               <h2 class=""> {{total_feedbacks_given}}/{{total_feedbacks_required}} </h2>
+                                            </div>
+                                        </label>
                                     </li>
                                 </ul>
                             </template>
@@ -161,6 +172,8 @@ export default {
             analysis:{},
             settings_open:false,
             rated:0,
+            total_feedbacks_given:0,
+            total_feedbacks_required:0,
             message:{
                 title:"sample",
                 body:"sample text",
@@ -269,6 +282,25 @@ export default {
                     console.log("analusos",res);
                     this.analysis = res.data;
                     console.log(this.analysis);
+                    
+                    var totalfeeds = 0;
+                    var totalreq = 0;
+                    for (const key in res.data) {
+                        console.log("loop",res.data[key])
+                        totalfeeds+=parseInt(res.data[key].total_feedbacks_given);
+                        totalreq+=parseInt(res.data[key].total_students);
+                        
+                    }
+                    this.total_feedbacks_given=totalfeeds;
+                    this.total_feedbacks_required=totalreq;
+
+                    if(res.data.total_feedbacks_given && res.data.total_feedbacks_required){
+                        console.log("sdjfbnasdk")
+                        this.total_feedbacks_given=res.data.total_feedbacks_given;
+                        this.total_feedbacks_required=res.data.total_feedbacks_required;
+                        this.analysis={};
+                    }
+
                 })
             }
             this.settings_open = !this.settings_open;
@@ -331,5 +363,11 @@ export default {
     }
     .ratio{
         outline: 2px solid red;
+    }
+    .total-feedbacks h2{
+        font-weight: 900;
+        font-size: 2.3rem;
+        margin-left: -1rem;
+        color:black;
     }
 </style>

@@ -49,6 +49,7 @@
 .qs-container{
     width: 88%;
     margin:2rem auto;
+    transform: translateX(20px);
 }
 .question{
     margin-bottom: 4rem;
@@ -102,14 +103,24 @@
     bottom: 5rem;
     right: 2.5rem;
 }
+.edit-icon i:hover,.delete-icon i:hover{
+    cursor: pointer;
+    transform: scale(1.2,1.2);
+}
 .edit-icon{
     position: absolute;
     top: 5px;;
-    left:-30px;
+    left:-50px;
 }
-.edit-icon i{
+.delete-icon{
+    position: absolute;
+    top: 5px;;
+    left:-20px;
+}
+.edit-icon i,.delete-icon i{
     color: #707070;
     font-size: 1.6rem;
+    transition: .2s all;
 }
 .edit-qs input{
     background: none;

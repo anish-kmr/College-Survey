@@ -14,6 +14,7 @@
             <div class="qs-container">
                 <div class="question" v-for="(qs,i) in active_template.questions" :key="i" :class="'qs-'+i">
                    <span class="edit-icon" @click="toggleEdit(i)"><i class="fas fa-pen"></i></span> 
+                   <span class="delete-icon" @click="deleteQs(i)"><i class="fas fa-trash"></i></span> 
                     <div class="qs-statement">
                         <div :id="'qsst-'+i">
                              <span class="qno">{{i+1}}. </span> <h2> {{qs}} </h2>
@@ -180,6 +181,9 @@ export default {
         toggleSelection(e){
             if(e.target.checked) this.selectAll();
             else this.unselectAll();
+        },
+        deleteQs(i){
+            this.active_template.questions.splice(i,1);
         },
         closeDialog(){
             document.getElementsByClassName("dialog-container")[0].classList.add("hidden");
