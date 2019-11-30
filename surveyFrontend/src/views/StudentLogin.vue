@@ -137,6 +137,11 @@ export default {
             }
         }
     },
+    beforeCreate() {
+        if(localStorage.getItem("role") == "student"){
+            this.$router.push("/student");
+        }
+    },
     methods:{
         toggleForm(){
             this.login_shown=!this.login_shown;

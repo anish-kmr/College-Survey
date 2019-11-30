@@ -24,6 +24,7 @@
                 <li v-if="role=='student'">
                     <div class="coins">
                         <i class="fas fa-coins"></i>
+                        <h2> {{user.coins}} </h2>
                     </div>
                 </li>
                 <li>
@@ -70,12 +71,7 @@ export default {
     data(){
         return{
             logged_in:null,
-            user:{
-                name:"",
-                email:"",
-                department:"",
-                id:"",
-            },
+            user:"",
             dropped:false,
         }
     },
@@ -84,7 +80,7 @@ export default {
         else{ 
             this.logged_in = true;
             this.user  = JSON.parse(localStorage.getItem("user"))
-            console.log(this.user)
+            console.log("user",this.user)
         }
     },
     methods: {
@@ -158,6 +154,8 @@ export default {
     position: relative;
     top:50%;
     transform:translateY(-50%);
+
+    color: #2e2e2e;
 }
 .nav>ul li:hover{
     cursor: pointer;
@@ -209,11 +207,23 @@ export default {
 }
 
 .coins{
-    height:100%;
-    padding: 2rem;
+    /* outline: 2px solid red; */
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    /* height:100%; */
 }
+.coins *{
+    padding: 1.5rem 1rem ;
+}
+
 .coins i{
     font-size: 2.4rem;
     color: #2b4fd3;
+}
+.coins h2{
+    font-size: 2.2rem;
+    color: #2e2e2e;
+    padding-top: 1.75rem;
 }
 </style>

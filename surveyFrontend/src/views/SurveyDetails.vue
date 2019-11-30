@@ -209,6 +209,7 @@ export default {
     beforeMount() {
         this.role = localStorage.getItem("role");
         this.user=JSON.parse(localStorage.getItem("user"));
+        this.rate(this.selected_survey.rating);
 
     },
     
@@ -248,13 +249,25 @@ export default {
             }
             console.log("ss",payload)
             axios.put("http://www.localhost/surveyBackend/feedback/create",payload).then(res=>{
-                console.log("rrres ",res.data);
+                console.log("rrres ",res);
                 if (res.data.success) {
                     this.message.title="Coins Earned"
                     this.message.body="Congratulations! You have earned 5 coins for answering the survey.Collect more for exciting gifts."
                     this.openDialog();
+                    var data = {
+                        studentID:this.user.studentID,
+                        coins:5,
+                    }
+                    axios.put(`http://www.localhost/surveyBackend/student/updatecoins`,data).then(response=>{
+                        console.log("added coins",response)     
+                    });
                 }
-                else if(res.data.updated) alert("Changed Responses");
+                else if(res.data.updated) {
+                    this.message.title="Feedback Changed"
+                    this.message.body="Your earlier response for this feedback has been changed. Complete other surveys to earn more coins.\nIf already done, wait for next survey."
+                    this.openDialog();
+                    // alert("Changed Responses");
+                }
             })
         },
         answer(i,response){

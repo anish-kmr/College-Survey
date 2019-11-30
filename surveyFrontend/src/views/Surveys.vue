@@ -108,7 +108,9 @@ export default {
         
         changeSelectedSurvey(survey){
             this.selected_survey = survey;
-            if(this.role=="student" && parseInt(this.id.toString()[0])==3){
+            console.log("this.selected_survey",this.selected_survey)
+            if(this.role=="student" &&  this.id && parseInt(this.id.toString()[0])==3){
+                console.log("calling rate")
                 this.$refs.child.rate(this.selected_survey.rating);
             }
             // if (this.role != "student" && this.selected_survey.type == "faculty") this.getIncludedFaculties();
@@ -176,7 +178,7 @@ export default {
                     // this.surveys=this.surveys.concat(res.data['mess']);
                     // this.surveys=this.surveys.concat(res.data['hostel']);
                     
-                    this.changeSelectedSurvey(this.surveys['faculty'][last_survey][0]);
+                    this.changeSelectedSurvey(this.surveys['faculty'][last_survey][0],this.surveys['faculty'][last_survey][0].sid);
                    
                     
         
