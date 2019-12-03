@@ -221,6 +221,8 @@ export default {
             }
             axios.post("http://www.localhost/surveyBackend/survey/close",payload).then(res=>{
                 console.log(res);
+                this.$parent.surveys=[];
+                this.$parent.getSurveys();
             })
 
         },

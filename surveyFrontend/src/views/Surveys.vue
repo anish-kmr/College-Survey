@@ -58,21 +58,35 @@
                 </div>
                 <div class="surveys" v-else>
                     <ul >
-                        <li v-for="survey in surveys" @click="changeSelectedSurvey(survey)" :key="survey.sid">
-                            <router-link :to="'/'+role+'/survey/'+status+'/'+survey.sid"> 
-                                <div class="survey-name">
-                                    <h2>{{survey.name}}</h2>
-                                    <p >{{survey.subjectName}}</p>
+                        <template v-if="surveys.length">
+                            <li v-for="survey in surveys" @click="changeSelectedSurvey(survey)" :key="survey.sid">
+                                <router-link :to="'/'+role+'/survey/'+status+'/'+survey.sid"> 
+                                    <div class="survey-name">
+                                        <h2>{{survey.name}}</h2>
+                                        <p >{{survey.subjectName}}</p>
+                                    </div>
+                                </router-link>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li>
+                                <div class="no-survey">
+                                    <h2>No Surveys Yet</h2>
                                 </div>
-                            </router-link>
-                        </li>
+                            </li>
+                        </template>
                         
                     </ul>
                 </div>
                 
             </div>
         </div>
-        <div class="survey-details">
+        <div v-if="selected_survey=='empty'">
+            <div class="no-details">
+                <h2>There are No Surveys Yet. Wait for one to be conducted</h2>
+            </div>
+        </div>
+        <div class="survey-details" v-else>
             <router-view :selected_survey="selected_survey" :compKey="compKey" ref="child"></router-view>
         </div>
     </div>
@@ -272,8 +286,11 @@ export default {
                                 })
                             }; 
                         })
-
-                        console.log("surveys",this.surveys)
+                        if (Object.keys(this.selected_survey).length === 0 ) {
+                            console.log("asdas")
+                            this.selected_survey="empty";
+                        }
+                        console.log("selerf",this.selected_survey)
                     }
                 })
                 
@@ -286,4 +303,18 @@ export default {
 </script>
 <style scoped>
 @import '../assets/css/survey.css';
+.no-survey{
+    color:rgb(73, 73, 73);
+    text-align: center;
+    font-size: 1.4rem;
+    padding-top: 2rem;
+}
+.no-details{
+    margin:2rem 5rem;
+}
+.no-details h2{
+    background: white;
+    padding:3rem 6rem;
+    color: #5c5c5c
+}
 </style>
